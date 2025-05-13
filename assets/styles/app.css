@@ -1,0 +1,25 @@
+/* Fonts Import */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.logo {
+  font-family: "montserrat", sans-serif;
+  font-weight: 900;
+  font-size: 1.8rem;
+  letter-spacing: -0.05em;
+}
+
+body {
+  background: whitesmoke;
+}
+
+.btn {
+  text-decoration: none;
+  /* color: orange; */
+  font-weight: 600;
+}

@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RollScape - Accueil{% endblock %}
+
+{% block main %}
+ <div class="container position-relative mb-3">
+          <div class="mw-xl mw-lg-none mx-auto">
+            <div class="row align-items-center">
+              <div class="col-lg-7 mb-20 mb-lg-0">
+                <div class="mw-2xl">
+                  <span class="badge px-5 py-2 text-primary bg-primary-subtle mb-1">Organisez, partagez, explorez</span>
+                  <h1 class="font-heading display-1 fw-bolder mb-5">
+                    <span>La plateforme communautaire des rôlistes</span>
+                    <span style="font-family: 'Playfair Display', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman';"> créatifs</span>
+                  </h1>
+                  <div class="d-sm-flex align-items-center mb-5">
+                    <div>
+                      <svg width="84" height="10" viewbox="0 0 84 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 4.25C0.585786 4.25 0.25 4.58579 0.25 5C0.25 5.41421 0.585786 5.75 1 5.75L1 4.25ZM84 5.00001L76.5 0.669879L76.5 9.33013L84 5.00001ZM1 5.75L77.25 5.75001L77.25 4.25001L1 4.25L1 5.75Z" fill="#1E254C"></path>
+                      </svg>
+                    </div>
+                    <div class="mt-3 mt-sm-0 ps-sm-3 mw-lg">
+                      <a class="btn btn-primary" href="#">
+                        <span>Commencez l’exploration</span>
+                        <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M14.83 11.29L10.59 7.05C10.497 6.95627 10.3864 6.88188 10.2646 6.83111C10.1427 6.78034 10.012 6.7542 9.88 6.7542C9.74799 6.7542 9.61729 6.78034 9.49543 6.83111C9.37357 6.88188 9.26297 6.95627 9.17 7.05C8.98375 7.23736 8.87921 7.49082 8.87921 7.755C8.87921 8.01919 8.98375 8.27264 9.17 8.46L12.71 12L9.17 15.54C8.98375 15.7274 8.87921 15.9808 8.87921 16.245C8.87921 16.5092 8.98375 16.7626 9.17 16.95C9.26344 17.0427 9.37426 17.116 9.4961 17.1658C9.61794 17.2155 9.7484 17.2408 9.88 17.24C10.0116 17.2408 10.1421 17.2155 10.2639 17.1658C10.3857 17.116 10.4966 17.0427 10.59 16.95L14.83 12.71C14.9237 12.617 14.9981 12.5064 15.0489 12.3846C15.0997 12.2627 15.1258 12.132 15.1258 12C15.1258 11.868 15.0997 11.7373 15.0489 11.6154C14.9981 11.4936 14.9237 11.383 14.83 11.29Z" fill="currentColor"></path>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                  {# <div>
+                    <span class="d-block mb-4 fs-9 fw-semibold text-secondary">ILS NOUS FONT CONFIANCE</span>
+                    <div class="d-flex flex-wrap gap-4">
+                      <img class="img-fluid" src="{{ asset('images/brands/logo-example1.png') }}" alt="">
+                      <img class="img-fluid" src="{{ asset('images/brands/logo-example3.png')}}" alt="">
+                      <img class="img-fluid" src="{{ asset('images/brands/logo-example2.png')}}" alt="">
+                    </div>
+                  </div> #}
+                </div>
+              </div>
+              <div class="col-lg-5">
+                <div class="position-relative">
+                  
+                  </div>
+                  <img class="img-fluid d-block w-100" src="{{asset('/images/image-blue-header.png')}}" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+{% endblock %}
