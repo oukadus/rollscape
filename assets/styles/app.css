@@ -23,3 +23,103 @@ body {
   /* color: orange; */
   font-weight: 600;
 }
+
+.card-center {
+  height: 90vh;
+}
+
+/* ///////////////////////////////////////
+    ACCOUNT SIDEBAR
+////////////////////////////////////// */
+
+.sidebar {
+  height: 100vh;
+  background-color: #ffffff;
+  /* border-right: 1px solid #e9ecef; */
+  padding-top: 20px;
+}
+
+.sidebar-logo {
+  padding: 0 15px 20px 15px;
+  margin-bottom: 20px;
+  /* border-bottom: 1px solid #e9ecef; */
+  text-align: center;
+}
+
+.nav-link {
+  color: #495057;
+  padding: 12px 15px;
+  margin: 10px 0 10px 0;
+  border-radius: 20px 0 0 20px;
+  /* transition: 0.3s; */
+  display: flex;
+  align-items: center;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.sidebar .nav-link.active::before {
+  content: "";
+  position: absolute;
+  right: 0px;
+  top: -20px;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border-bottom-right-radius: 20px;
+  box-shadow: 5px 5px 0 5px #f5f5f5;
+}
+
+.sidebar .nav-link.active::after {
+  content: "";
+  position: absolute;
+  right: 0px;
+  bottom: -20px;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border-top-right-radius: 20px;
+  box-shadow: 5px -5px 0 5px #f5f5f5;
+  border-right: 1px solid #e9ecef;
+}
+
+.nav-link:hover {
+  /* background-color: #f1f3f5; */
+  color: #0d6efd;
+}
+
+.nav-link.active {
+  background-color: #f5f5f5;
+  color: #0d6efd;
+  font-weight: 500;
+}
+
+.nav-link i {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.badge-count {
+  margin-left: auto;
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+/* .main-content {
+  padding: 20px;
+  height: 100vh;
+} */
+
+.content-header {
+  /* background-color: #ffffff; */
+  padding: 15px 20px;
+  /* border-radius: 5px; */
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); */
+  margin-bottom: 20px;
+}
+
+.content-header h4 {
+  color: #6c757d;
+  margin: 0;
+  font-weight: 400;
+}
