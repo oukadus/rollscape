@@ -39,7 +39,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="bi bi-card-list"></i>Mes ressources
+                                <i class="bi bi-card-list"></i> Mes ressources
                             </a>
                         </li>
                         <li class="nav-item">
@@ -56,11 +56,23 @@
                         <li class="nav-item">
                             <a href="{{ path('app_account') }}" class="nav-link {% if app.request.attributes.get('_route') in ['app_account', 'app_account_password'] %}active{% endif %}"> <i class="bi bi-gear"></i> Profil</a>
                         </li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item mt-5">
+                            <a href="{{ path('admin') }}" class="nav-link {% if app.request.attributes.get('_route') in ['app_account', 'app_account_password'] %}active{% endif %}"> <i class="bi bi-house-lock "></i> Administration</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{path('app_logout')}}" class="nav-link">
+                                <i class="bi bi-box-arrow-left"></i> Se déconnecter
+                            </a>
+                        </li>
+                        {% else %}
                         <li class="nav-item mt-5">
                             <a href="{{path('app_logout')}}" class="nav-link">
                                 <i class="bi bi-box-arrow-left"></i> Se déconnecter
                             </a>
                         </li>
+                        {% endif %}
+
                     </ul>
                 </aside>
             
