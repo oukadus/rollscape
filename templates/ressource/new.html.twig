@@ -1,0 +1,40 @@
+    {% extends 'base.html.twig' %}
+        
+
+    
+
+    {% block title %}RollScape - Création d'une ressource{% endblock %}
+
+    {% block stylesheets %}
+            {{ parent() }}
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" />
+        {% endblock %}
+        {% block javascripts %}
+        {{ parent() }}
+        <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                let input = document.querySelector('.tagify-input');
+
+                let tagify = new Tagify(input, {
+                    whitelist: {{ tags|json_encode|raw }},
+                    enforceWhitelist: true,
+                    dropdown: {
+                        enabled: 1,
+                        maxItems: 15,
+                    },
+                });
+            });
+        </script>
+    {% endblock %}
+
+    {% block main %}
+        <div class="container w-75 mx-auto mt-5">
+            <h2>Créer une ressource</h2>
+
+            {{ include('ressource/_form.html.twig') }}
+
+            <a href="{{ path('app_ressource_index') }}">back to list</a>
+        </div>
+    {% endblock %}
