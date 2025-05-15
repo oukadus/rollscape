@@ -1,6 +1,11 @@
 /* Fonts Import */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
+:root {
+  --rs-font: "montserrat", sans-serif;
+}
+
+/* CSS Reset */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -8,7 +13,7 @@
 }
 
 .logo {
-  font-family: "montserrat", sans-serif;
+  font-family: var(--rs-font);
   font-weight: 900;
   font-size: 1.8rem;
   letter-spacing: -0.05em;
@@ -16,6 +21,11 @@
 
 body {
   background: whitesmoke;
+}
+
+main {
+  max-height: 100vh;
+  overflow: auto;
 }
 
 .btn {
@@ -26,6 +36,13 @@ body {
 
 .card-center {
   height: 90vh;
+}
+
+/* ///////////////////////////////////////
+    Classes utilitaires
+////////////////////////////////////// */
+.ff-montserrat {
+  font-family: var(--rs-font);
 }
 
 /* ///////////////////////////////////////
@@ -56,6 +73,7 @@ body {
   align-items: center;
   position: relative;
   text-transform: uppercase;
+  font-size: 0.9rem;
 }
 
 .sidebar .nav-link.active::before {

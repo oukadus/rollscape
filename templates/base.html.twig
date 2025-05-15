@@ -54,11 +54,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ path('app_account') }}" class="nav-link {% if app.request.attributes.get('_route') in ['app_account', 'app_account_password'] %}active{% endif %}"> <i class="bi bi-gear"></i> Profil</a>
+                            <a href="{{ path('app_account') }}" class="nav-link {% if app.request.attributes.get('_route') in ['app_account', 'app_account_password', 'app_account_profile'] %}active{% endif %}"> <i class="bi bi-person-circle"></i> Profil</a>
                         </li>
                         {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-item mt-5">
-                            <a href="{{ path('admin') }}" class="nav-link {% if app.request.attributes.get('_route') in ['app_account', 'app_account_password'] %}active{% endif %}"> <i class="bi bi-house-lock "></i> Administration</a>
+                            <a href="{{ path('admin') }}" class="nav-link"> <i class="bi bi-house-lock "></i> Administration</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{path('app_logout')}}" class="nav-link">

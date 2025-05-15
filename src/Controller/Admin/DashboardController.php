@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Tag;
+use App\Entity\Type;
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -48,6 +50,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
         yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-solid fa-user-large', User::class);
+        yield MenuItem::linkToCrud('Types', 'fas fa-list', Type::class);
+        yield MenuItem::linkToCrud('Etiquettes', 'fas fa-list', Tag::class);
         yield MenuItem::linkToRoute('Back to Home', 'fas fa-arrow-right-from-bracket', 'app_home');
     }
 }
