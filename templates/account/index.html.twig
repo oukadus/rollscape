@@ -5,18 +5,18 @@
 {% block main %}
 
 
-  <div class="d-flex flex-column align-items-center p-3 w-50 mx-auto mt-5">
+  <div class="d-flex flex-column align-items-center p-3 w-75 mx-auto mt-5">
     {# <div class="rounded-circle  mb-3 bg-primary" style="width: 150px; height: 150px;"></div> #}
     <img src="{{ asset('images/profiles/' ~ app.user.picture) }}" alt="Avatar utilisateur" class="rounded-circle mb-3" width="150" height="150">
-    <h2 class="ff-montserrat fw-bolder fs-1 mb-0">{{ app.user.firstname }} {{ app.user.lastname }}</h2>
+    <h2 class="ff-montserrat fw-bolder fs-1 mb-0 text-center">{{ app.user.firstname }} {{ app.user.lastname }}</h2>
     <p class="text-muted small">@{{ app.user.username }}</p>
-    <p class="text-center">{{ app.user.description }}</p>
+    <p class="text-lg-center w-75 w-md-100 px-md-2 mx-auto">{{ app.user.description }}</p>
     <div class="d-flex justify-content-center gap-2 w-100 mt-1">
       <a href="{{path('app_account_profile')}}" class="btn btn-sm btn-outline-primary">Modifier son profil</a>
       <a href="{{path('app_account_password')}}" class="btn btn-sm btn-outline-primary">Modifier son mot de passe</a>
     </div>
 
-    <div class="d-flex flex-row justify-content-between w-50 gap-1 mt-3 p-3">
+    <div class="d-flex flex-row justify-content-between w-50 w-md-75 w-sm-100 px-sm-3 gap-2 p-3">
       <div class="text-center">
         <strong>24</strong><br><small>Ressources</small>
       </div>

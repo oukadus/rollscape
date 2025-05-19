@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Form\ProfileUserType;
 use App\Form\PasswordUserType;
+use App\Repository\TypeRepository;
 use Symfony\Component\Form\FormError;
+use App\Controller\RessourceController;
+use App\Repository\RessourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,18 +19,33 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 final class AccountController extends AbstractController
 {
     #[Route('/account', name: 'app_account')]
-    public function index(): Response
+    public function index(RessourceRepository $ressourcerepository, TypeRepository $typeRepository, Request $request): Response
     {
-        return $this->render('account/index.html.twig');
+        // Search bar
+        $type = $request->query->get('type');
+        $types = $typeRepository->findAll();
+        $search = $request->query->get('search');
+        return $this->render('account/index.html.twig', [
+            'user' => $this->getUser(),
+            'search' => $search,
+            'types' => $types,
+            'type' => $type,
+        ]);
     }
 
     #[Route('/account/password', name: 'app_account_password')]
-    public function password(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
+    public function password(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, RessourceRepository $ressourcerepository, TypeRepository $typeRepository): Response
     {
+        
 
         $user = $this->getUser();
         $form = $this->createForm(PasswordUserType::class, $user);
         $form->handleRequest($request);
+
+        // Search bar
+        $type = $request->query->get('type');
+        $types = $typeRepository->findAll();
+        $search = $request->query->get('search');
 
         if ($form->isSubmitted() && $form->isValid()) {
             $currentPassword = $form->get('currentPassword')->getData();
@@ -51,16 +69,24 @@ final class AccountController extends AbstractController
 
         return $this->render('account/password.html.twig', [
             'modifyPwd' => $form->createView(),
+            'types' => $types,
+            'type' => $type,
+            'search' => $search,
         ]);
     }
 
     #[Route('/account/profile', name: 'app_account_profile')]
-    public function profile(Request $request, EntityManagerInterface $entityManager,  SluggerInterface $slugger): Response
+    public function profile(Request $request, EntityManagerInterface $entityManager,  SluggerInterface $slugger, RessourceRepository $ressourcerepository, TypeRepository $typeRepository): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(ProfileUserType::class, $user);
         $form->handleRequest($request);
         $picture = $form->get('picture')->getData();
+
+        // Search bar
+        $type = $request->query->get('type');
+        $types = $typeRepository->findAll();
+        $search = $request->query->get('search');
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($picture) {
@@ -91,7 +117,10 @@ final class AccountController extends AbstractController
 
         return $this->render('account/modify.html.twig', [
             'modifyProfile' => $form->createView(),
-            'form' => $form
+            'form' => $form,
+            'types' => $types,
+            'type' => $type,
+            'search' => $search,
         ]);
     }
 }

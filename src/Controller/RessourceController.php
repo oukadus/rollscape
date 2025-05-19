@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\Entity\Tag;
 use DateTimeImmutable;
 use App\Entity\Ressource;
-use App\Form\RessourceForm;
 use App\Form\RessourceType;
+use App\Repository\TypeRepository;
 use App\Repository\RessourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,8 +21,26 @@ final class RessourceController extends AbstractController
     #[Route(name: 'app_ressource_index', methods: ['GET'])]
     public function index(RessourceRepository $ressourceRepository, Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
+        $user = $this->getUser();
         return $this->render('ressource/index.html.twig', [
-            'ressources' => $ressourceRepository->findAll(),
+            'ressources' => $ressourceRepository->findByUser($user),
+        ]);
+    }
+
+    #[Route('/ressource/search', name: 'ressource_search')]
+    public function search(Request $request, RessourceRepository $ressourceRepository, TypeRepository $typerepository): Response
+    {
+        $search = $request->query->get('search');
+        $typeSlug = $request->query->get('type');
+
+        $types = $typerepository->findAll(); // pour afficher le select
+        $ressources = $ressourceRepository->findBySearchAndType($search, $typeSlug);    
+
+        return $this->render('ressource/search.html.twig', [
+            'ressources' => $ressources,
+            'search' => $search,
+            'types' => $types,
+            'typeSlug' => $typeSlug,
         ]);
     }
 
@@ -62,6 +80,7 @@ final class RessourceController extends AbstractController
             $type = $ressource->getType();
             $type->addRessource($ressource);
 
+
             // Gestion des tags
             $tagsInput = $form->get('tags')->getData(); // "dnd, fantasy"
             $tagNames = array_filter(array_map('trim', explode(',', $tagsInput)));
@@ -73,8 +92,11 @@ final class RessourceController extends AbstractController
                 }
             }
 
+
+
             // Enregistrement en base
             $ressource->setCreatedAt(new DateTimeImmutable());
+
             $entityManager->persist($ressource);
             $entityManager->flush();
 
@@ -92,6 +114,8 @@ final class RessourceController extends AbstractController
             'ressource' => $ressource,
             'form' => $form,
             'tags' => $tagNames, // envoyé au JavaScript
+            'is_edit' => false, // Indique au template que nous ne sommes pas en édition
+
         ]);
     }
 
@@ -123,21 +147,13 @@ final class RessourceController extends AbstractController
             }
             // Récupérer les nouveaux tags depuis le champ texte
             $tagsInput = $form->get('tags')->getData(); 
-            $tagNamesInput = array_filter(array_map('trim', explode(',', $tagsInput)));
 
+            $tagNamesInput = array_filter(array_map('trim', explode(',', $tagsInput)));
 
             // Traitement du fichier
             // Gérer le fichier uniquement s’il est remplacé
             $uploadedFile = $form->get('filename')->getData();
             if ($uploadedFile) {
-                // 1. Supprimer l’ancien fichier s’il existe
-                $oldFilename = $ressource->getFilename();
-                if ($oldFilename) {
-                    $oldFilePath = $this->getParameter('ressource_directory') . '/' . $oldFilename;
-                    if (file_exists($oldFilePath)) {
-                        unlink($oldFilePath);
-                    }
-                }
                 $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename)->lower();
                 $newFilename = $safeFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
@@ -166,7 +182,8 @@ final class RessourceController extends AbstractController
                     $ressource->addTag($tag);
                 }
             }
-
+            // Enregistrement en base
+            
             // Date de mise à jour
             $ressource->setUpdatedAt(new \DateTimeImmutable());
 
@@ -184,6 +201,7 @@ final class RessourceController extends AbstractController
             'form' => $form,
             'tags' => $tagNames,
             'selectedTags' => $existingTagNames,
+            'is_edit' => true, // Indique au template que nous sommes en édition
         ]);
     }
 

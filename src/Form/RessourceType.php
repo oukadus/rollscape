@@ -29,6 +29,7 @@ class RessourceType extends AbstractType
                 'mapped' => false,
                 'required' => true,
                 'label' => 'Choisissez votre fichier',
+                'attr' => ['class' => 'img-upload'],
                 'constraints' => [
                     new File([
                         'maxSize' => '3092k',

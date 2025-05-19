@@ -38,9 +38,10 @@ class RessourceCrudController extends AbstractCrudController
             ImageField::new('filename')->setLabel('Fichier')
                 ->setBasePath('images/ressources')
                 ->setUploadDir('public/images/ressources')
-                ->setHelp('Fichier de la ressource'),
-            DateField::new('createdAt')->hideOnForm(),
-            DateField::new('updatedAt')->hideOnForm(),
+                ->setHelp('Fichier de la ressource')
+                ->hideOnForm(),
+            DateField::new('createdAt')->setLabel('Crée le')->hideOnForm(),
+            DateField::new('updatedAt')->setLabel('Mise à jour le')->hideOnForm(),
             TextField::new('user.username')->setLabel('Auteur')->hideOnForm(),
             AssociationField::new('type')->setLabel('Type'),
             AssociationField::new('tags')

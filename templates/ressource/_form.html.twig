@@ -1,4 +1,23 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {# <button class="btn">{{ button_label|default('Save') }}</button> #}
+
+{{ form_row(form.title) }}
+
+{% if not is_edit %}
+    {{ form_row(form.filename) }}
+    {% else %}
+    <div class="to-disapear">
+    {{ form_row(form.filename) }}
+    </div>
+
+{% endif %}
+
+
+{{ form_row(form.type) }}
+{{ form_row(form.tags) }}
+{{ form_row(form.description) }}
+{{ form_row(form.submit) }}
+
+
+
+
 {{ form_end(form) }}

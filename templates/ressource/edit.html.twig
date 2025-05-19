@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Ressource{% endblock %}
+{% block title %}RollScape - Modifer une ressource{% endblock %}
 
 {% block stylesheets %}
             {{ parent() }}
@@ -10,31 +10,81 @@
         {{ parent() }}
         <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-            let input = document.querySelector('.tagify-input');
-
-            let tagify = new Tagify(input, {
-                whitelist: {{ tags|json_encode|raw }},
-                 enforceWhitelist: true,
-                dropdown: {
-                    enabled: 1,
-                    maxItems: 15,
-                }
-            });
-
-        // Pré-remplissage des tags liés à la ressource
-        tagify.addTags({{ selectedTags|json_encode|raw }});
-    });
-</script>
+        
     {% endblock %}
 
 {% block main %}
-    <h1>Edit Ressource</h1>
+    <div class="container">
+        <div class="w-75 mx-auto">
+            <h2 class="ff-montserrat fw-bolder fs-3 pb-3 border-bottom border-black-subtle mb-4">Modifier une ressource</h2>
+            <div class="row">
+                <div class="col-4">
+                    <div class="img-preview rounded-3">
+                    <img src="{{ asset('images/ressources/' ~ ressource.filename) }}" alt="Aperçu de la ressource" class="rounded-3 img-fluid mx-auto">
+                    </div>
+                </div>
+                <div class="col-8">
+                    {# {{ form_start(form) }} #}
+                    {{ form_start(form, {'attr': {
+                        'data-turbo': 'false', 
+                        'novalidate': 'novalidate',
+                        'data-controller': 'none' 
+                        }}) }}
 
-    {{ include('ressource/_form.html.twig', {'button_label': 'Update'}) }}
+                        {{ form_row(form.title) }}
+                        <div class="to-disapear">
+                            {{ form_row(form.filename) }}
+                        </div>
+                        {{ form_row(form.type) }}
+                        {{ form_row(form.tags) }}
+                        {{ form_row(form.description) }}
+                        {{ form_row(form._token) }}
 
-    <a href="{{ path('app_ressource_index') }}">back to list</a>
 
-    {{ include('ressource/_delete_form.html.twig') }}
+                        <div class="d-flex gap-2 w-50 align-items-start justify-content-start">
+                        {{ form_row(form.submit, {'label': 'Enregistrer'}) }}
+                        {{ include('ressource/_delete_form.html.twig', {'button_label': 'Supprimer'}) }}
+                        </div>
+                    {{ form_end(form) }}
+                    
+                    
+                    
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+    <script>
+
+        let toDisepear = document.querySelector('.to-disapear');
+        if (toDisepear) {
+            toDisepear.remove();
+        }
+            
+        document.addEventListener("DOMContentLoaded", function () {
+            const input = document.querySelector('.tagify-input');
+            if (!input) return;
+
+                // Détruire l'ancienne instance si présente
+                if (input._tagify) {
+                    input._tagify.destroy();
+                    delete input._tagify;
+             }
+
+        // Initialiser Tagify avec les options correctes
+            input._tagify = new Tagify(input, {
+                whitelist: {{ tags|json_encode|raw }},
+                enforceWhitelist: true,
+                dropdown: {
+                    enabled: 1,
+                    maxItems: 15,
+                },
+            originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
+        });
+
+        // Pré-remplir les tags existants
+        input._tagify.addTags({{ selectedTags|json_encode|raw }});
+        });
+    </script>
 {% endblock %}

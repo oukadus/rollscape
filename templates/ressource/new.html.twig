@@ -13,28 +13,68 @@
         {{ parent() }}
         <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                let input = document.querySelector('.tagify-input');
-
-                let tagify = new Tagify(input, {
-                    whitelist: {{ tags|json_encode|raw }},
-                    enforceWhitelist: true,
-                    dropdown: {
-                        enabled: 1,
-                        maxItems: 15,
-                    },
-                });
-            });
-        </script>
+        
     {% endblock %}
 
     {% block main %}
-        <div class="container w-75 mx-auto mt-5">
-            <h2>Créer une ressource</h2>
+        <div class="container">
+            <div class="w-75 mx-auto">
+                <h2 class="ff-montserrat fw-bolder pb-3 fs-3 border-bottom border-black-subtle mb-4">Créer une ressource</h2>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="img-preview img-preview-placeholder rounded-3">
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        {{ form_start(form) }}
+                            {{ form_row(form.title) }}
+                            {{ form_row(form.filename) }}
+                            {{ form_row(form.type) }}
+                            {{ form_row(form.tags) }}
+                            {{ form_row(form.description) }}
+                            {{ form_row(form.submit) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
 
-            {{ include('ressource/_form.html.twig') }}
-
-            <a href="{{ path('app_ressource_index') }}">back to list</a>
         </div>
+
+
+        <script>
+            // Preview image
+            let imgUpload = document.querySelector('.img-upload');
+            let imgPreview = document.querySelector('.img-preview');
+
+            imgUpload.addEventListener("change", (e) => {
+                // console.log(imgUpload.value)
+                // console.log(e.target.files[0]);
+                let ressourceFile = e.target.files[0]
+
+                imgPreview.innerHTML = ""; // reset
+        
+                img = document.createElement('img')
+                img.src = URL.createObjectURL(ressourceFile)
+                img.alt = 'Aperçu de la ressource'
+                img.classList.add('rounded-3', 'img-fluid', 'w-100')
+
+                imgPreview.classList.remove('img-preview-placeholder')
+                imgPreview.appendChild(img)
+                console.log(img)
+            })  
+           
+
+
+            // Tagigy
+            let input = document.querySelector('.tagify-input');
+
+            let tagify = new Tagify(input, {
+                whitelist: {{ tags|json_encode|raw }},
+                enforceWhitelist: true,
+                dropdown: {
+                    enabled: 1,
+                    maxItems: 15,
+                },
+                 originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
+            });
+        </script>
     {% endblock %}
