@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\TypeRepository;
 use App\Repository\RessourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -13,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class HomeController extends AbstractController
 {
      #[Route('/', name: 'app_home')]
-    public function index(RessourceRepository $ressourceRepository, TypeRepository $typeRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function index(RessourceRepository $ressourceRepository, TypeRepository $typeRepository, Request $request, EntityManagerInterface $entityManager, PaginatorInterface $paginator): Response
     {
         // Afficher la liste des ressources
         $user = $this->getUser();
@@ -22,11 +23,15 @@ final class HomeController extends AbstractController
         $types = $typeRepository->findAll();
         $search = $request->query->get('search');
 
+         $query = $ressourceRepository->createQueryForAll();
+
+        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), 12);
 
         if ($user) {
             // Utilisateur connecté : on affiche le la page d'accueil"
             return $this->render('home/index.html.twig', [
-                'ressources' => $ressourceRepository->findAll(),
+                'pagination' => $pagination,
+                'ressources' => $pagination,
                 'search' => $search,
                 'types' => $types,
                 'type' => $type,

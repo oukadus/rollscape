@@ -1,0 +1,4 @@
+knp_paginator:
+  template:
+    pagination: "pagination/rs-pagination.html.twig" # <-- ton fichier personnalisé
+    sortable: "@KnpPaginator/Pagination/sortable_link.html.twig"

@@ -9,6 +9,7 @@ use App\Form\RessourceType;
 use App\Repository\TypeRepository;
 use App\Repository\RessourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,29 +20,46 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class RessourceController extends AbstractController
 {
     #[Route(name: 'app_ressource_index', methods: ['GET'])]
-    public function index(RessourceRepository $ressourceRepository, Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function index(RessourceRepository $ressourceRepository, Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, PaginatorInterface $paginator, TypeRepository $typeRepository): Response
     {
         $user = $this->getUser();
+        $search = $request->query->get('search');
+        $type = $request->query->get('type');
+        $types = $typeRepository->findAll();
+
+        $query = $ressourceRepository->createQueryForUser($user);
+        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), 12);
+
         return $this->render('ressource/index.html.twig', [
-            'ressources' => $ressourceRepository->findByUser($user),
+            'pagination' => $pagination,
+            'ressources' => $pagination,
+            'search' => $search,
+            'type' => $type,
+            'types' => $types,
         ]);
     }
 
     #[Route('/ressource/search', name: 'ressource_search')]
-    public function search(Request $request, RessourceRepository $ressourceRepository, TypeRepository $typerepository): Response
+    public function search(Request $request, RessourceRepository $ressourceRepository, TypeRepository $typeRepository, PaginatorInterface $paginator): Response
     {
         $search = $request->query->get('search');
         $typeSlug = $request->query->get('type');
+        $types = $typeRepository->findAll();
 
-        $types = $typerepository->findAll(); // pour afficher le select
-        $ressources = $ressourceRepository->findBySearchAndType($search, $typeSlug);    
+        // ✅ On utilise une méthode qui retourne une QUERY
+        $query = $ressourceRepository->createQueryForSearch($search, $typeSlug);
 
-        return $this->render('ressource/search.html.twig', [
-            'ressources' => $ressources,
-            'search' => $search,
-            'types' => $types,
-            'typeSlug' => $typeSlug,
-        ]);
+        $pagination = $paginator->paginate(
+        $query,
+        $request->query->getInt('page', 1), 12);
+
+    return $this->render('ressource/search.html.twig', [
+        'pagination' => $pagination,
+        'ressources' => $pagination,
+        'search' => $search,
+        'types' => $types,
+        'type' => $typeSlug,
+    ]);
     }
 
     #[Route('/new', name: 'app_ressource_new', methods: ['GET', 'POST'])]

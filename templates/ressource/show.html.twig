@@ -9,25 +9,23 @@
             <img src="{{ asset('images/ressources/' ~ ressource.filename) }}" alt="{{ ressource.title}}" class="col w-50 img-fluid">
             <div class="ressource-content col">
                 <h2 class="ff-montserrat fw-bolder fs-2 mb-0 text-center">{{ ressource.title}}</h2>
-                <p class="text-muted small text-center">@{{ ressource.user.username }}</p>
+                <p class="text-muted small text-center">@{{ ressource.user.username }} | {{ ressource.type}}</p>
                 <p>{{ ressource.description ? : "L'auteur n'a pas encore mis de description à la ressource"}}</p>
                 <p><strong>Etiquettes :</strong><br>
                     {% for tag in ressource.tags %}
                         <span class="text-muted text-black-subtle">#{{ tag.name }}</span>
                     {% endfor %}
                 </p>
-                <div class="d-flex justify-content-center gap-2 w-100 mt-1">
-                {# <a href="{{path('app_account_profile')}}" class="btn btn-sm btn-outline-primary">Modifier son profil</a>
-                <a href="{{path('app_account_password')}}" class="btn btn-sm btn-outline-primary">Modifier son mot de passe</a> #}
-                </div> 
+                <div class="d-flex  justify-content-start align-items-start gap-2 w-100 mt-1">
+                    {% if app.user and app.user.id == ressource.user.id %}
+                        <a href="{{ path('app_ressource_edit', {'id': ressource.id}) }}" class="btn btn-primary btn-small"><i class="bi bi-pencil" data-bs-toggle="tooltip" title="Modifier " data-bs-placement="right"></i></a>
+                        <a href="{{ path('app_ressource_delete', {'id': ressource.id}) }}" class="btn btn-outline-danger btn-small"><i class="bi bi-trash" data-bs-toggle="tooltip" title="Supprimer" data-bs-placement="right"></i></a>
+                    {% endif %}
+                    <a href="{{ path('app_home') }}" class="btn btn-outline-primary btn-small">Retourner à l'accueil</a>
+                </div>
+                 
             </div> 
         </div>
     </div>
-        
-
-    <a href="{{ path('app_ressource_index') }}">back to list</a>
-
-    <a href="{{ path('app_ressource_edit', {'id': ressource.id}) }}">edit</a>
-
-    {{ include('ressource/_delete_form.html.twig') }}
+     
 {% endblock %}
