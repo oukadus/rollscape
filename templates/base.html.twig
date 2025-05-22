@@ -28,125 +28,126 @@
 	<body>
        
 
-        <div>
-            <div class="d-flex" id="layout">
-                <!-- Sidebar -->
-                <aside class="sidebar">
-                    <div class="sidebar-logo">
-                        <h1><a href="{{path('app_home')}}" class="logo text-decoration-none fw-bolder"><img src="{{asset('images/rs-logo.png')}}"><br><span class="logo-text">Roll<em class="fw-light fst-normal">Scape</em></span></a></h1>
-                    </div>
-                    <div class="d-flex rs-toggle-btn">
-                        <button id="toggleSidebar" class="btn btn-sm btn-outline-secondary mb-3 rounded-circle">
-                            <i class="bi bi-chevron-double-left"></i>
+        
+        <div class="d-flex" id="layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-logo">
+                    <h1><a href="{{path('app_home')}}" class="logo text-decoration-none fw-bolder"><img src="{{asset('images/rs-logo.png')}}"><br><span class="logo-text">Roll<em class="fw-light fst-normal">Scape</em></span></a></h1>
+                </div>
+                <div class="d-flex rs-toggle-btn">
+                    <button id="toggleSidebar" class="btn btn-sm btn-outline-secondary mb-3 rounded-circle">
+                        <i class="bi bi-chevron-double-left"></i>
+                    </button>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="{{path('app_home')}}" class="nav-link {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}">
+                            <i class="bi bi-house" data-bs-toggle="tooltip" title="Accueil" data-bs-placement="right"></i> <span>Accueil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{path('app_ressource_index')}}" data-turbo="false" class="nav-link {% if app.request.attributes.get('_route') in ['app_ressource_index', 'app_ressource_edit'] %}active{% endif %}">
+                            <i class="bi bi-card-list" data-bs-toggle="tooltip" title="Mes ressources" data-bs-placement="right"></i> <span>Mes ressources</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{path('app_ressource_new')}}" data-turbo="false" class="nav-link  {% if app.request.attributes.get('_route') == 'app_ressource_new' %}active{% endif %}">
+                            <i class="bi bi-plus-square-fill" data-bs-toggle="tooltip" title="Créer une ressource" data-bs-placement="right"></i> <span>Créer une ressource</span>
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="{{path('app_bookmark')}}" class="nav-link {% if app.request.attributes.get('_route') == 'app_bookmark' %}active{% endif %}">
+                            <i class="bi bi-bookmarks" data-bs-toggle="tooltip" title="Favoris" data-bs-placement="right"></i> <span>Favoris</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('app_account') }}" class="nav-link {% if app.request.attributes.get('_route') in ['app_account', 'app_account_password', 'app_account_profile'] %}active{% endif %}"> <i class="bi bi-person-circle" data-bs-toggle="tooltip" title="Profil" data-bs-placement="right"></i> <span>Profil</a>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+
+                    <li class="nav-item mt-xl-5 mt-lg-0 mt-md-2 mt-sm-2 mt-0">
+                        <a href="{{ path('admin') }}" class="nav-link"> 
+                            <i class="bi bi-house-lock" data-bs-toggle="tooltip" title="Administration" data-bs-placement="right"></i> <span>Administration</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{path('app_logout')}}" class="nav-link">
+                            <i class="bi bi-box-arrow-left" data-bs-toggle="tooltip" title="Déconnexion" data-bs-placement="right"></i> <span>Se déconnecter</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item mt-xl-5 mt-lg-0 mt-md-2 mt-sm-2 mt-0">
+                        <a href="{{path('app_logout')}}" class="nav-link">
+                            <i class="bi bi-box-arrow-left" data-bs-toggle="tooltip" title="Déconnexion" data-bs-placement="right"></i> <span>Se déconnecter</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li class="d-flex justify-content-center align-items-center">
+                        <button id="theme-toggle" class="btn btn-sm btn-outline-secondary p-3 rounded-3 shadow-sm" title="Changer le thème">
+                            <i class="bi bi-moon-fill" id="theme-icon"></i>
                         </button>
-                    </div>
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a href="{{path('app_home')}}" class="nav-link {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}">
-                                <i class="bi bi-house" data-bs-toggle="tooltip" title="Accueil" data-bs-placement="right"></i> <span>Accueil
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{path('app_ressource_index')}}" data-turbo="false" class="nav-link {% if app.request.attributes.get('_route') in ['app_ressource_index', 'app_ressource_edit'] %}active{% endif %}">
-                                <i class="bi bi-card-list" data-bs-toggle="tooltip" title="Mes ressources" data-bs-placement="right"></i> <span>Mes ressources</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{path('app_ressource_new')}}" data-turbo="false" class="nav-link  {% if app.request.attributes.get('_route') == 'app_ressource_new' %}active{% endif %}">
-                                <i class="bi bi-plus-square-fill" data-bs-toggle="tooltip" title="Créer une ressource" data-bs-placement="right"></i> <span>Créer une ressource</span>
-                            </a>
-                        </li>
+                    </li>
                         
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="bi bi-bookmarks" data-bs-toggle="tooltip" title="Favoris" data-bs-placement="right"></i> <span>Favoris</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ path('app_account') }}" class="nav-link {% if app.request.attributes.get('_route') in ['app_account', 'app_account_password', 'app_account_profile'] %}active{% endif %}"> <i class="bi bi-person-circle" data-bs-toggle="tooltip" title="Profil" data-bs-placement="right"></i> <span>Profil</a>
-                        </li>
-                        {% if is_granted('ROLE_ADMIN') %}
 
-                        <li class="nav-item mt-lg-2 mt-md-2 mt-sm-1 mt-0">
-                            <a href="{{ path('admin') }}" class="nav-link"> 
-                                <i class="bi bi-house-lock" data-bs-toggle="tooltip" title="Administration" data-bs-placement="right"></i> <span>Administration</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{path('app_logout')}}" class="nav-link">
-                                <i class="bi bi-box-arrow-left" data-bs-toggle="tooltip" title="Déconnexion" data-bs-placement="right"></i> <span>Se déconnecter</span>
-                            </a>
-                        </li>
-                        {% else %}
-                        <li class="nav-item mt-lg-2 mt-md-2 mt-sm-1 mt-0">
-                            <a href="{{path('app_logout')}}" class="nav-link">
-                                <i class="bi bi-box-arrow-left" data-bs-toggle="tooltip" title="Déconnexion" data-bs-placement="right"></i> <span>Se déconnecter</span>
-                            </a>
-                        </li>
-                        {% endif %}
-                        <li class="d-flex justify-content-center align-items-center">
-                            <button id="theme-toggle" class="btn btn-sm btn-outline-secondary p-3 rounded-3 shadow-sm" title="Changer le thème">
-                                <i class="bi bi-moon-fill" id="theme-icon"></i>
-                            </button>
-                        </li>
-                           
-
-                    </ul>
-                </aside>
+                </ul>
                 
-                <!-- Main Content -->
-                <main class="main-content rounded-top">
-                    <div class="container-fluid py-3 form-search"> 
-                        <div class="container">
-                            <form method="get" action="{{ path('ressource_search') }}" class="row gx-2 align-items-center justify-content-center w-lg-75 w-md-75 w-sm-100 mx-auto">
-                                <div class="col-7 col-md-9 col-sm-7">
-                                    <input
-                                        type="text"
-                                        name="search"
-                                        class="form-control serch-input"
-                                        placeholder="Rechercher une ressource..."
-                                        value="{{ search is defined ? search : '' }}"
-                                    >
-                                </div>
+            </aside>
+            
+            <!-- Main Content -->
+            <main class="main-content rounded-top">
+                <div class="container-fluid py-3 form-search"> 
+                    <div class="container">
+                        <form method="get" action="{{ path('ressource_search') }}" class="row gx-2 align-items-center justify-content-center w-lg-75 w-md-75 w-sm-100 mx-auto">
+                            <div class="col-7 col-md-9 col-sm-7">
+                                <input
+                                    type="text"
+                                    name="search"
+                                    class="form-control serch-input"
+                                    placeholder="Rechercher une ressource..."
+                                    value="{{ search is defined ? search : '' }}"
+                                >
+                            </div>
 
-                                {% if types is defined %}
-                                <div class="col-4 col-md-2 col-sm-4">
-                                    <select name="type" class="form-select">
-                                        <option value="">Tous les types</option>
-                                        {% for typeItem in types %}
-                                            <option value="{{ typeItem.slug }}" {% if type is defined and type == typeItem.slug %}selected{% endif %}>
-                                                {{ typeItem.name }}
-                                            </option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                {% endif %}
-                                <div class="col-1 col-md-1 col-sm-1">
-                                    <button type="submit" class="btn btn-outline-secondary rounded-pill w-100 d-flex justify-content-center align-items-center">
-                                        <i class="bi bi-search"></i>
-                                    </button>
-                                </div>
-                            </form>
-                            
-                        </div>
+                            {% if types is defined %}
+                            <div class="col-4 col-md-2 col-sm-4">
+                                <select name="type" class="form-select">
+                                    <option value="">Tous les types</option>
+                                    {% for typeItem in types %}
+                                        <option value="{{ typeItem.slug }}" {% if type is defined and type == typeItem.slug %}selected{% endif %}>
+                                            {{ typeItem.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            {% endif %}
+                            <div class="col-1 col-md-1 col-sm-1">
+                                <button type="submit" class="btn btn-rs-primary rounded w-100 d-flex justify-content-center align-items-center">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                        
                     </div>
-                    <div class="container my-2">
-                        {# read and display all flash messages #}
-                        {% for label, messages in app.flashes %}
-                            {% for message in messages %}
-                                <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
-                                    {{ message }}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                            {% endfor %}
+                </div>
+                <div class="container my-2">
+                    {# read and display all flash messages #}
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
                         {% endfor %}
-                    </div>
-                    <div class="px-3 py-1">
-                    {% block main %}{% endblock %}
-                    </div>
-                </main>
-            </div>
+                    {% endfor %}
+                </div>
+                <div class="px-3 py-1">
+                {% block main %}{% endblock %}
+                </div>
+            </main>
         </div>
+        
         {# <footer></footer> #}
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js" integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D" crossorigin="anonymous"></script>

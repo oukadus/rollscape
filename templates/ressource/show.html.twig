@@ -4,12 +4,13 @@
 
 {% block main %}
     <div class="container my-5">
-        <div class="w-75 mx-auto row row-2-cols">
-        {# <div class="rounded-circle  mb-3 bg-primary" style="width: 150px; height: 150px;"></div> #}
-            <img src="{{ asset('images/ressources/' ~ ressource.filename) }}" alt="{{ ressource.title}}" class="col w-50 img-fluid">
-            <div class="ressource-content col">
-                <h2 class="ff-montserrat fw-bolder fs-2 mb-0 text-center">{{ ressource.title}}</h2>
-                <p class="text-muted small text-center">@{{ ressource.user.username }} | {{ ressource.type}}</p>
+        <div class="mx-auto row row-gap-4">
+            <div class="col-lg-8 col-md-6 col-sm-12 col-12">
+                <img src="{{ asset('images/ressources/' ~ ressource.filename) }}" alt="{{ ressource.title}}" class="img-fluid w-100 rounded-3">
+            </div>
+            <div class="ressource-content rs-bg-white col-lg-4 col-md-6 col-sm-12 col-12 d-flex flex-column justify-content-start align-items-start gap-2 rounded-3 p-3">
+                <h2 class="ff-montserrat fw-bolder fs-2 pt-2 mb-0 text-center w-100">{{ ressource.title}}</h2>
+                <p class="text-muted small text-center w-100">@{{ ressource.user.username }} | {{ ressource.type}}</p>
                 <p>{{ ressource.description ? : "L'auteur n'a pas encore mis de description à la ressource"}}</p>
                 <p><strong>Etiquettes :</strong><br>
                     {% for tag in ressource.tags %}
@@ -19,7 +20,7 @@
                 <div class="d-flex  justify-content-start align-items-start gap-2 w-100 mt-1">
                     {% if app.user and app.user.id == ressource.user.id %}
                         <a href="{{ path('app_ressource_edit', {'id': ressource.id}) }}" class="btn btn-primary btn-small"><i class="bi bi-pencil" data-bs-toggle="tooltip" title="Modifier " data-bs-placement="right"></i></a>
-                        <a href="{{ path('app_ressource_delete', {'id': ressource.id}) }}" class="btn btn-outline-danger btn-small"><i class="bi bi-trash" data-bs-toggle="tooltip" title="Supprimer" data-bs-placement="right"></i></a>
+                        <a href="{{ path('app_ressource_delete', {'id': ressource.id}) }}" class="btn btn-danger btn-small"><i class="bi bi-trash" data-bs-toggle="tooltip" title="Supprimer" data-bs-placement="right"></i></a>
                     {% endif %}
                     <a href="{{ path('app_home') }}" class="btn btn-outline-primary btn-small">Retourner à l'accueil</a>
                 </div>

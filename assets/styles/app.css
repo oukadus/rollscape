@@ -14,22 +14,10 @@
 html[data-theme="dark"] {
   --rs-color-accent: #f88f4a;
   --rs-color-light: #121212;
-  --rs-color-white: #363535;
+  --rs-color-white: #212121;
   --rs-color-border: #595858;
   --rs-color-text: #e7e0e0;
   --rs-color-logo: #e7e0e0;
-}
-
-#theme-toggle {
-  /* position: absolute; */
-  /* bottom: 4rem; */
-  /* right: 4rem; */
-  /* z-index: 2; */
-  width: 2rem;
-  height: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 /* CSS Reset */
@@ -37,6 +25,14 @@ html[data-theme="dark"] {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+#theme-toggle {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .logo {
@@ -87,11 +83,39 @@ form .search-button:focus {
   font-family: var(--rs-font);
 }
 
+.rs-bg-white {
+  background-color: var(--rs-color-white);
+}
+
+.btn-rs-primary {
+  background-color: var(--rs-color-accent);
+  color: var(--rs-color-white);
+  border: 1px solid var(--rs-color-accent);
+}
+
+.btn-rs-primary:hover {
+  background-color: var(--rs-color-white);
+  color: var(--rs-color-accent);
+  border: 1px solid var(--rs-color-accent);
+}
+
+.btn-outiline-rs-primary {
+  background-color: transparent;
+  color: var(--rs-color-white);
+  border: 1px solid var(--rs-color-white);
+}
+
+.btn-outiline-rs-primary:hover {
+  background-color: var(--rs-color-accent);
+  color: var(--rs-color-white);
+  border: 1px solid var(--rs-color-accent);
+}
+
 /* ///////////////////////////////////////
     MASONRY GRID
 ////////////////////////////////////// */
 .masonry-gallery {
-  column-count: 4;
+  column-count: 5;
   column-gap: 1rem;
 }
 
@@ -118,7 +142,7 @@ form .search-button:focus {
 }
 
 /* ///////////////////////////////////////
-    ACCOUNT SIDEBAR
+    MEMBRE SIDEBAR
 ////////////////////////////////////// */
 
 .sidebar {
@@ -147,15 +171,16 @@ form .search-button:focus {
 
 .nav-link {
   color: var(--rs-color-text);
-  padding: 15px 10px 10px 10px;
+  padding: 7px;
   margin: 5px 0 5px 0;
   border-radius: 20px 0 0 20px;
   display: flex;
   align-items: center;
   position: relative;
-  text-transform: uppercase;
   font-size: 0.9rem;
   margin-left: 0.6rem;
+  font-family: var(--rs-font);
+  font-weight: 500;
 }
 
 .sidebar .nav-link.active::before {
@@ -191,12 +216,12 @@ form .search-button:focus {
 
 .nav-link:hover {
   /* background-color: #f1f3f5; */
-  color: var(--bs-primary);
+  color: var(--rs-color-accent);
 }
 
 .nav-link.active {
   background-color: var(--rs-color-light);
-  color: var(--bs-primary);
+  color: var(--rs-color-accent);
   font-weight: 500;
   box-shadow: 5px 0 0 -1px var(--rs-color-light);
   border: 1px solid var(--rs-color-border);
@@ -221,17 +246,6 @@ form .search-button:focus {
   overflow-y: auto;
   /* background-color: #f5f5f5; */
 }
-
-/* .content-header {
-  padding: 15px 20px;
-  margin-bottom: 20px;
-}
-
-.content-header h4 {
-  color: #6c757d;
-  margin: 0;
-  font-weight: 400;
-} */
 
 /* ///////////////////////////////////////
     SIDEBAR RETRACTABLE
@@ -270,12 +284,13 @@ form .search-button:focus {
 
 .rs-toggle-btn {
   position: relative;
-  min-height: 4rem;
+  min-height: 2rem;
+  margin: 1rem 0;
 }
 
 #toggleSidebar {
   position: absolute;
-  top: 1rem;
+  top: 0.5rem;
   background-color: var(--rs-color-light);
   right: -15px;
   z-index: 2;
@@ -283,6 +298,10 @@ form .search-button:focus {
   &:hover {
     color: var(--rs-color-text);
   }
+}
+
+#toggleSidebar.collapsed {
+  top: 1rem;
 }
 
 /* ///////////////////////////////////////
@@ -347,15 +366,16 @@ a:hover .hover-overlay {
   opacity: 1;
 }
 
+.card:hover .hover-overlay,
 .card:hover .bookmark-overlay {
   opacity: 1;
 }
 
 /* ///////////////////////////////////////
-    LAYOUT
+    SIDEBAR RESPONSIVE
 ////////////////////////////////////// */
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px) {
   .sidebar {
     width: 70px;
   }

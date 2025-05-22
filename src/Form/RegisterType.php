@@ -64,9 +64,9 @@ class RegisterType extends AbstractType
                     new NotBlank(['message' => 'Le mot de passe est obligatoire']),
                     new Length([
                         'min' => 8,
-                        'minMessage' => 'Le mot de passe doit contenir au moins {{limit}} caractères',
+                        'minMessage' => 'Le mot de passe doit contenir au moins 8 caractères',
                         'max' => 14,
-                        'maxMessage' => 'Le mot de passe doit contenir au plus {{limit}} caractères',
+                        'maxMessage' => 'Le mot de passe doit contenir au plus 14 caractères',
                     ])
 
                 ]

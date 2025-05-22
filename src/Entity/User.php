@@ -58,9 +58,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Ressource::class, mappedBy: 'user')]
     private Collection $ressources;
 
+    /**
+     * @var Collection<int, Ressource>
+     */
+    #[ORM\ManyToMany(targetEntity: Ressource::class)]
+    private Collection $bookmarks;
+
     public function __construct()
     {
         $this->ressources = new ArrayCollection();
+        $this->bookmarks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -234,6 +241,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $ressource->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ressource>
+     */
+    public function getBookmarks(): Collection
+    {
+        return $this->bookmarks;
+    }
+
+    public function addBookmark(Ressource $bookmark): static
+    {
+        if (!$this->bookmarks->contains($bookmark)) {
+            $this->bookmarks->add($bookmark);
+        }
+
+        return $this;
+    }
+
+    public function removeBookmark(Ressource $bookmark): static
+    {
+        $this->bookmarks->removeElement($bookmark);
 
         return $this;
     }
