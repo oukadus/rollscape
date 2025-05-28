@@ -8,7 +8,7 @@
 			{% endblock %}
 		</title>
 		<link
-		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+		rel="icon" href="{{ asset('images/rs-logo.png') }}">
         {# Font Fair Display #}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,500;1,600;1,700&family=Sora:wght@400;500;600;700&display=swap">
 
@@ -99,8 +99,8 @@
             <main class="main-content rounded-top">
                 <div class="container-fluid py-3 form-search"> 
                     <div class="container">
-                        <form method="get" action="{{ path('ressource_search') }}" class="row gx-2 align-items-center justify-content-center w-lg-75 w-md-75 w-sm-100 mx-auto">
-                            <div class="col-7 col-md-9 col-sm-7">
+                        <form method="get" action="{{ path('ressource_search') }}" class="d-flex justify-content-center align-items-center gap-2">
+                            <div class="search-bar w-75">
                                 <input
                                     type="text"
                                     name="search"
@@ -111,7 +111,7 @@
                             </div>
 
                             {% if types is defined %}
-                            <div class="col-4 col-md-2 col-sm-4">
+                            <div class="type-select">
                                 <select name="type" class="form-select">
                                     <option value="">Tous les types</option>
                                     {% for typeItem in types %}
@@ -122,7 +122,7 @@
                                 </select>
                             </div>
                             {% endif %}
-                            <div class="col-1 col-md-1 col-sm-1">
+                            <div class="button-search">
                                 <button type="submit" class="btn btn-rs-primary rounded w-100 d-flex justify-content-center align-items-center">
                                     <i class="bi bi-search"></i>
                                 </button>

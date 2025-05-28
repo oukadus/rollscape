@@ -4,6 +4,7 @@
 :root {
   --rs-font: "montserrat", sans-serif;
   --rs-color-accent: #f37021;
+  --rs-color-subtle: #f9e8e5;
   --rs-color-light: #f5f5f5;
   --rs-color-white: #fefefe;
   --rs-color-border: #e9ecef;
@@ -42,6 +43,10 @@ html[data-theme="dark"] {
   letter-spacing: -0.05em;
 }
 
+.rs-logo {
+  width: 4rem;
+}
+
 body {
   background: var(--rs-color-light);
 }
@@ -76,6 +81,11 @@ form .search-button:focus {
   box-shadow: none;
 }
 
+.tagify__input::before {
+  color: var(--rs-color-text) !important; /* ou la couleur de ton choix */
+  opacity: 1; /* important pour forcer l'affichage complet */
+}
+
 /* ///////////////////////////////////////
     Classes utilitaires
 ////////////////////////////////////// */
@@ -85,6 +95,10 @@ form .search-button:focus {
 
 .rs-bg-white {
   background-color: var(--rs-color-white);
+}
+
+.rs-bg-light {
+  background-color: var(--rs-color-light);
 }
 
 .btn-rs-primary {
@@ -99,16 +113,37 @@ form .search-button:focus {
   border: 1px solid var(--rs-color-accent);
 }
 
-.btn-outiline-rs-primary {
+.btn-outline-rs-primary {
   background-color: transparent;
-  color: var(--rs-color-white);
-  border: 1px solid var(--rs-color-white);
+  color: var(--rs-color-accent);
+  border: 1px solid var(--rs-color-accent);
 }
 
-.btn-outiline-rs-primary:hover {
+.btn-outline-rs-primary:hover {
   background-color: var(--rs-color-accent);
   color: var(--rs-color-white);
   border: 1px solid var(--rs-color-accent);
+}
+
+.text-rs-accent {
+  color: var(--rs-color-accent);
+
+  &:hover {
+    color: var(--rs-color-accent);
+  }
+}
+
+.bg-primary-rs-subtle {
+  background-color: var(--rs-color-subtle);
+}
+
+.form-help {
+  font-size: 0.9rem;
+  color: var(--rs-color-text);
+}
+
+.mnt-1 {
+  margin-top: -1rem;
 }
 
 /* ///////////////////////////////////////
@@ -240,7 +275,7 @@ form .search-button:focus {
   color: var(--rs-color-text);
 }
 
-/* 📦 Contenu principal */
+/* Contenu principal */
 .main-content {
   flex-grow: 1;
   overflow-y: auto;
@@ -415,5 +450,64 @@ a:hover .hover-overlay {
 
   #toggleSidebar {
     display: none;
+  }
+}
+
+/* ///////////////////////////////////////
+    RESPONSIVE NAVBAR
+////////////////////////////////////// */
+@media screen and (max-width: 992px) {
+  #landing-navbar .navbar-collapse {
+    background-color: var(--rs-color-white);
+    z-index: 1;
+  }
+
+  #landing-navbar .navbar-collapse ul li {
+    width: 100%;
+  }
+
+  #landing-navbar .navbar-collapse .nav-link {
+    justify-content: center;
+    text-align: center;
+    padding: 0;
+    border-radius: 0;
+    margin: 0;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid var(--rs-color-accent);
+
+    i {
+      display: none;
+    }
+  }
+
+  #landing-navbar .navbar-collapse .nav-link:hover {
+    background-color: var(--rs-color-accent);
+    color: var(--rs-color-white);
+  }
+
+  .btn-rs-group {
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+  }
+
+  .btn-rs-group a {
+    margin-left: 0 !important;
+    color: var(--rs-color-logo);
+
+    &:hover {
+      background-color: var(--rs-color-accent);
+      color: var(--rs-color-logo);
+    }
+  }
+}
+
+/* ///////////////////////////////////////
+    RESPONSIVE FORMS
+////////////////////////////////////// */
+
+@media screen and (max-width: 768px) {
+  .ressource-form {
+    flex-direction: column-reverse;
   }
 }

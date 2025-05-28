@@ -1,6 +1,6 @@
 {% extends 'landingBase.html.twig' %}
 
-{% block title %}Hello LoginController!{% endblock %}
+{% block title %}RollScape - Se connecter{% endblock %}
 
 {% block main %}
 {% if error %}
@@ -24,9 +24,9 @@
                 <div class="form-floating mb-3">
                   <input type="email" class="form-control" id="username"  name="_username" placeholder="name@example.com" value="{{ last_username }}" required>
                 
-                  <label for="floatingEmail">Email address</label>
+                  <label for="floatingEmail">Adresse email</label>
                   <div class="invalid-feedback">
-                    Please enter a valid email address.
+                    Veuillez entrer une adresse email valide.
                   </div>
                 </div>
                 
@@ -34,10 +34,11 @@
                 <div class="form-floating mb-3">
                   <input type="password" class="form-control" id="password" placeholder="Indiquez votre mot de passe" name="_password" required>
 
-                  <label for="floatingPassword">Password</label>
+                  <label for="floatingPassword">Mot de passe</label>
                   <div class="invalid-feedback">
-                    Password must be at least 8 characters.
+                    Votre mot de passe doit contenir au moins 8 caractères.
                   </div>
+                  <input type="checkbox" onclick="myFunction()"> <span class="text-muted">Afficher/masquer le mot de passe</span>
                 </div>
                 
                 {# <!-- Remember me checkbox -->
@@ -53,7 +54,7 @@
                 
                 <!-- Submit button -->
                 <div class="d-grid gap-2">
-                  <button class="btn btn-success btn-lg" type="submit">Se connecter</button>
+                  <button class="btn btn-rs-primary btn-lg" type="submit">Se connecter</button>
                 </div>
                 
                 {# <!-- Forgot password link -->
@@ -77,11 +78,21 @@
               </div>
             </div> #}
             <div class="card-footer text-center py-3 bg-transparent">
-              <p class="mb-0">Vous n'avez pas de compte ? <a href="{{path('app_register')}}" class="text-decoration-none">S'enregistrer</a></p>
+              <p class="mb-0">Vous n'avez pas de compte ? <a href="{{path('app_register')}}" class="text-decoration-none text-rs-accent">S'enregistrer</a></p>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <script>
+    function myFunction() {
+      var x = document.getElementById("password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+  </script>
 {% endblock %}

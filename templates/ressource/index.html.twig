@@ -59,7 +59,7 @@
               <div class="bookmark-overlay p-2">
                  <div class="d-flex gap-1">
                     <a href="{{ path('app_ressource_edit', {'id': ressource.id}) }}" class="text-decoration-none btn btn-primary btn-sm"><i class="bi bi-pencil-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="Editer"></i></a>
-                    <a href="{{ path('app_ressource_delete', {'id': ressource.id}) }}" class="text-decoration-none btn btn-danger btn-sm"><i class="bi bi-trash-fill" data-bs-toggle="tooltip"  data-bs-placement="top" title="supprimer"></i></a>
+                    {% include 'ressource/_delete_form.html.twig' with {'ressource': ressource} %}
                 </div>
               </div>
             </a>

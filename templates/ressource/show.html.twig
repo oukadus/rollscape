@@ -4,25 +4,32 @@
 
 {% block main %}
     <div class="container my-5">
-        <div class="mx-auto row row-gap-4">
-            <div class="col-lg-8 col-md-6 col-sm-12 col-12">
+        <div class="mx-auto row row-gap-4" style="min-height: 100vh;">
+            <div class="col-lg-8 col-md-6 col-sm-12 col-12 overflow-auto">
                 <img src="{{ asset('images/ressources/' ~ ressource.filename) }}" alt="{{ ressource.title}}" class="img-fluid w-100 rounded-3">
             </div>
             <div class="ressource-content rs-bg-white col-lg-4 col-md-6 col-sm-12 col-12 d-flex flex-column justify-content-start align-items-start gap-2 rounded-3 p-3">
-                <h2 class="ff-montserrat fw-bolder fs-2 pt-2 mb-0 text-center w-100">{{ ressource.title}}</h2>
-                <p class="text-muted small text-center w-100">@{{ ressource.user.username }} | {{ ressource.type}}</p>
-                <p>{{ ressource.description ? : "L'auteur n'a pas encore mis de description à la ressource"}}</p>
-                <p><strong>Etiquettes :</strong><br>
-                    {% for tag in ressource.tags %}
-                        <span class="text-muted text-black-subtle">#{{ tag.name }}</span>
-                    {% endfor %}
-                </p>
-                <div class="d-flex  justify-content-start align-items-start gap-2 w-100 mt-1">
-                    {% if app.user and app.user.id == ressource.user.id %}
-                        <a href="{{ path('app_ressource_edit', {'id': ressource.id}) }}" class="btn btn-primary btn-small"><i class="bi bi-pencil" data-bs-toggle="tooltip" title="Modifier " data-bs-placement="right"></i></a>
-                        <a href="{{ path('app_ressource_delete', {'id': ressource.id}) }}" class="btn btn-danger btn-small"><i class="bi bi-trash" data-bs-toggle="tooltip" title="Supprimer" data-bs-placement="right"></i></a>
-                    {% endif %}
-                    <a href="{{ path('app_home') }}" class="btn btn-outline-primary btn-small">Retourner à l'accueil</a>
+                <div class="position-sticky" style="top: 2rem;">
+                    <h2 class="ff-montserrat fw-bolder fs-2 pt-2 mb-0 text-center w-100">{{ ressource.title}}</h2>
+                    <p class="text-muted small text-center w-100">@{{ ressource.user.username }} | {{ ressource.type}}</p>
+                    <p>{{ ressource.description ? : "L'auteur n'a pas encore mis de description à la ressource"}}</p>
+                    <p><strong>Etiquettes :</strong><br>
+                        {% for tag in ressource.tags %}
+                            <span class="text-muted text-black-subtle">#{{ tag.name }}</span>
+                        {% endfor %}
+                    </p>
+                    <div class="d-flex  justify-content-start align-items-start gap-2 w-100 mt-1 flex-wrap">
+                        {% if app.user and app.user.id == ressource.user.id %}
+                            <a href="{{ path('app_ressource_edit', {'id': ressource.id}) }}" class="btn btn-primary btn-sm"><i class="bi bi-pencil" data-bs-toggle="tooltip" title="Modifier " data-bs-placement="top"></i></a>
+                            {% include 'ressource/_delete_form.html.twig' with {'ressource': ressource} %}
+                        {% endif %}
+                        <a href="{{ asset('images/ressources/' ~ ressource.filename) }}" 
+                        class="btn btn-rs-primary btn-sm" 
+                        download="{{ asset('images/ressources/' ~ ressource.filename) }}">
+                        <i class="bi bi-download me-1" data-bs-toggle="tooltip" title="Télécharger" data-bs-placement="top"></i>
+                        </a>
+                        <a href="{{ path('app_home') }}" class="btn btn-outline-primary btn-sm">Retourner à l'accueil</a>
+                    </div>
                 </div>
                  
             </div> 

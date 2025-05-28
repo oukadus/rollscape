@@ -68,6 +68,17 @@ class RessourceRepository extends ServiceEntityRepository
                 ->getQuery();
         }
 
+        // Dernières ressources
+        public function findLatestPublic(int $limit = 10): array
+        {
+            return $this->createQueryBuilder('r')
+                ->orderBy('r.id', 'DESC')
+                ->setMaxResults($limit)
+                ->getQuery()
+                ->getResult();
+        }
+
+        
         // La recherche avec type
         public function createQueryForSearch(?string $search, ?string $typeSlug): \Doctrine\ORM\Query
         {

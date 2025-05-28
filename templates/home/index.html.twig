@@ -4,45 +4,8 @@
 
 {% block main %}
 
-{# Ancien layout #}
-{# <div class="container mb-5">
-  <h2 class="mb-4 ff-montserrat fw-bolder fs-3 d-none">Ressources</h2>
-    <div class="row row-gap-4 mt-5 flex-wrap">
-    <!-- Répéter ce bloc pour chaque ressource -->
-        {% for ressource in ressources %}
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="card rounded-top border-0 shadow-sm position-relative">
-                    <a href="{{ path('app_ressource_show', {'id': ressource.id}) }}" class="text-decoration-none position-relative" >
-                        <img src="{{asset('images/ressources/' ~ ressource.filename )}}" alt="{{ressource.title}}" class="img-fluid w-100 rounded-top ressource-img">
-                        <div class="hover-overlay rounded-top d-flex align-items-center justify-content-center"> 
-                            <h3 class="px-3 fs-6 text-white ff-montserrat">{{ressource.title}}</h3>
-                        </div>
-                        <div class="bookmark-overlay p-2">
-                            <a href="{{ path('app_ressource_edit', {'id': ressource.id}) }}" class="text-decoration-none btn btn-outline-light rounded-3">
-                                <i class="bi bi-bookmark"></i>
-                            </a>
-                    </div>
-                    </a>
-                     
-                    <div class="d-flex justify-content-between align-items-center px-2 py-2">
-                    <p class="card-content my-0 py-2 ps-2 align-items-center ff-montserrat fw-semibold text-muted">
-                    @{{ ressource.user.username }}</p>
-
-                    </div>
-                </div>
-                
-            </div>
-          {% else %}
-            <p> Aucune ressource trouvée.</p>
-        {% endfor %}
-        <div class="pagination mt-4">
-            {{ knp_pagination_render(pagination) }}
-        </div>
-    </div>
-</div> #}
-
 <div class="container mb-5">
-  <h2 class="mb-4 ff-montserrat fw-bolder fs-3 d-none">Ressources</h2>
+  <h2 class="mb-4 ff-montserrat fw-bolder fs-3 visually-hidden">Ressources</h2>
   <div class="masonry-gallery mt-5">
     {% for ressource in ressources %}
       <div class="masonry-item">
@@ -55,7 +18,7 @@
           </a>
           <div class="bookmark-overlay p-2">
             <button
-              class="btn rounded toggle-bookmark {{ ressource in app.user.bookmarks ? 'btn-dark' : 'btn-outiline-rs-primary' }}"
+              class="btn rounded toggle-bookmark {{ ressource in app.user.bookmarks ? 'btn-dark' : 'btn-outline-light' }}"
               data-ressource-id="{{ ressource.id }}"
               data-bookmarked="{{ ressource in app.user.bookmarks ? 'true' : 'false' }}"
               onclick="event.preventDefault(); event.stopPropagation();">
@@ -74,56 +37,54 @@
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".toggle-bookmark").forEach((button) => {
-      button.addEventListener("click", () => {
-        const ressourceId = button.dataset.ressourceId;
-        const isBookmarked = button.dataset.bookmarked === "true";
-        const url = isBookmarked
-          ? `/bookmark/remove/${ressourceId}`
-          : `/bookmark/add/${ressourceId}`;
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.toggle-bookmark').forEach(button => {
+    button.addEventListener('click', () => {
+      const ressourceId = button.dataset.ressourceId;
+      const isBookmarked = button.dataset.bookmarked === 'true';
+      const url = isBookmarked
+        ? `/bookmark/remove/${ressourceId}`
+        : `/bookmark/add/${ressourceId}`;
 
-        // 🧠 Sauvegarde de l’état avant changement
-        const originalClass = button.className;
-        const originalIcon = button.innerHTML;
-        const originalState = button.dataset.bookmarked;
+      // Sauvegarde de l’état avant changement
+      const originalClass = button.className;
+      const originalIcon = button.innerHTML;
+      const originalState = button.dataset.bookmarked;
 
-        // Mise à jour immédiate de l’interface
-        if (isBookmarked) {
-          button.classList.remove("btn-dark");
-          button.classList.add("btn-outline-light");
-          button.innerHTML = '<i class="bi bi-bookmark"></i>';
-          button.dataset.bookmarked = "false";
-        } else {
-          button.classList.remove("btn-outline-light");
-          button.classList.add("btn-dark");
-          button.innerHTML = '<i class="bi bi-check-lg"></i>';
-          button.dataset.bookmarked = "true";
+      // Mise à jour immédiate de l’interface
+      if (isBookmarked) {
+        button.classList.remove('btn-dark');
+        button.classList.add('btn-outline-light');
+        button.innerHTML = '<i class="bi bi-bookmark"></i>';
+        button.dataset.bookmarked = 'false';
+      } else {
+        button.classList.remove('btn-outline-light');
+        button.classList.add('btn-dark');
+        button.innerHTML = '<i class="bi bi-check-lg"></i>';
+        button.dataset.bookmarked = 'true';
+      }
+
+      // Requête serveur
+      fetch(url, {
+        method: 'GET',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      }).then(response => {
+        if (!response.ok) {
+          throw new Error('Réponse non OK');
         }
+      }).catch(error => {
+        console.warn('Erreur AJAX, rollback UI', error);
 
-        // Requête serveur
-        fetch(url, {
-          method: "GET",
-          headers: {
-            "X-Requested-With": "XMLHttpRequest",
-          },
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Réponse non OK");
-            }
-          })
-          .catch((error) => {
-            console.warn("Erreur AJAX, rollback UI", error);
-
-            // Échec → rollback UI
-            button.className = originalClass;
-            button.innerHTML = originalIcon;
-            button.dataset.bookmarked = originalState;
-          });
+        // Échec → rollback UI
+        button.className = originalClass;
+        button.innerHTML = originalIcon;
+        button.dataset.bookmarked = originalState;
       });
     });
   });
+});
 </script>
 
 

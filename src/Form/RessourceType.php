@@ -67,7 +67,7 @@ class RessourceType extends AbstractType
             ])
             -> add('submit', SubmitType::class, [
                 'label' => 'Publier',
-                'attr' => ['class' => 'btn btn-success'],
+                'attr' => ['class' => 'btn btn-rs-primary px-4'],
             ])
         ;
     }

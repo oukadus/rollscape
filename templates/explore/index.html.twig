@@ -1,20 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'landingBase.html.twig' %}
 
-{% block title %}RollScape - Mes Favoris{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('js/bookmark.js') }}"></script>
-{% endblock %}
+{% block title %}RollScape - Découverte{% endblock %}
 
 {% block main %}
-
-
 
 <div class="container mb-5">
   <h2 class="mb-4 ff-montserrat fw-bolder fs-3 d-none">Ressources</h2>
   <div class="masonry-gallery mt-5">
-    {% for ressource in app.user.bookmarks %}
+    {% for ressource in ressources %}
       <div class="masonry-item">
         <a href="{{ path('app_ressource_show', {'id': ressource.id}) }}" class="text-decoration-none d-block">
           <div class="card rounded border-0 shadow-sm position-relative">
@@ -23,27 +16,13 @@
               <h3 class="px-3 fs-6 text-white ff-montserrat text-center mb-3">{{ ressource.title }}</h3>
             </div>
           </a>
-          <div class="bookmark-overlay p-2">
-            <a href="{{ path('app_bookmark_remove', {'id': ressource.id}) }}" class="text-decoration-none btn btn-dark rounded-3">
-                <i class="bi bi-x-lg"></i>
-            </a>
-            <a href="{{ asset('images/ressources/' ~ ressource.filename) }}" 
-              class="btn btn-rs-primary btn-sm" 
-              download="{{ asset('images/ressources/' ~ ressource.filename) }}">
-              <i class="bi bi-download me-1"></i>
-            </a>
-          </div>
         </div>
       </div>
     {% else %}
       <p>Aucune ressource trouvée.</p>
     {% endfor %}
   </div>
-  {# <div class="pagination mt-4">
-    {{ knp_pagination_render(pagination) }}
-  </div> #}
 </div>
-
 
 
 

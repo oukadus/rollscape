@@ -14,16 +14,16 @@
     {% endblock %}
 
 {% block main %}
-    <div class="container">
-        <div class="w-75 mx-auto">
+    <div class="container mt-3">
+        <div class="px-lg-5 px-md-2 px-sm-1 px-0">
             <h2 class="ff-montserrat fw-bolder fs-3 pb-3 border-bottom border-black-subtle mb-4">Modifier une ressource</h2>
-            <div class="row">
-                <div class="col-4">
-                    <div class="img-preview rounded-3">
+            <div class="row ressource-form">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-12 ">
+                    <div class="img-preview rounded-3 h-100">
                     <img src="{{ asset('images/ressources/' ~ ressource.filename) }}" alt="Aperçu de la ressource" class="rounded-3 img-fluid mx-auto">
                     </div>
                 </div>
-                <div class="col-8">
+                <div class="col-lg-8 col-md-8 col-sm-12 col-12">
                     {# {{ form_start(form) }} #}
                     {{ form_start(form, {'attr': {
                         'data-turbo': 'false', 
@@ -43,7 +43,6 @@
 
                         <div class="d-flex gap-2 w-50 align-items-start justify-content-start">
                         {{ form_row(form.submit, {'label': 'Enregistrer'}) }}
-                        {{ include('ressource/_delete_form.html.twig', {'button_label': 'Supprimer'}) }}
                         </div>
                     {{ form_end(form) }}
                     
