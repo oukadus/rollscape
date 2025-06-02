@@ -5,13 +5,13 @@
         {# « Précédent #}
         {% if previous is defined %}
             <li class="page-item">
-                <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): previous})) }}" aria-label="Previous">
+                <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): previous})) }}" aria-label="Précédent">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
         {% else %}
             <li class="page-item disabled">
-                <span class="page-link" aria-label="Previous">
+                <span class="page-link" aria-label="Précédent">
                     <span aria-hidden="true">&laquo;</span>
                 </span>
             </li>
@@ -33,13 +33,13 @@
         {# Suivant » #}
         {% if next is defined %}
             <li class="page-item">
-                <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): next})) }}" aria-label="Next">
+                <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): next})) }}" aria-label="Suivant">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
         {% else %}
             <li class="page-item disabled">
-                <span class="page-link" aria-label="Next">
+                <span class="page-link" aria-label="Suivant">
                     <span aria-hidden="true">&raquo;</span>
                 </span>
             </li>

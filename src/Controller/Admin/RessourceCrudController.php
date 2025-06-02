@@ -43,6 +43,8 @@ class RessourceCrudController extends AbstractCrudController
             DateField::new('createdAt')->setLabel('Crée le')->hideOnForm(),
             DateField::new('updatedAt')->setLabel('Mise à jour le')->hideOnForm(),
             TextField::new('user.username')->setLabel('Auteur')->hideOnForm(),
+            TextField::new('alt')->setLabel('Texte alternatif')
+                ->setHelp('Texte alternatif pour l\'accessibilité')->hideOnIndex(),
             AssociationField::new('type')->setLabel('Type'),
             AssociationField::new('tags')
             ->setLabel('Étiquettes')

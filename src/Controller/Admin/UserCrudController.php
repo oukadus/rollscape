@@ -33,7 +33,7 @@ class UserCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('email')->setLabel('Email')->hideOnForm(),
+            TextField::new('email')->setLabel('Email'),
             textField::new('firstname')->setLabel('Prénom'),
             textField::new('lastname')->setLabel('Nom'),
             TextField::new('username')->setLabel('Nom d\'utilisateur')->hideOnForm(),

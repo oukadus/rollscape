@@ -9,9 +9,9 @@
   <div class="masonry-gallery mt-5">
     {% for ressource in ressources %}
       <div class="masonry-item">
-        <a href="{{ path('app_ressource_show', {'id': ressource.id}) }}" class="text-decoration-none d-block">
+        <a href="{{ path('app_ressource_show', {'id': ressource.id}) }}" class="text-decoration-none d-block" title="{{ ressource.title }}">
           <div class="card rounded border-0 shadow-sm position-relative">
-            <img src="{{ asset('images/ressources/' ~ ressource.filename) }}" alt="{{ ressource.title }}" class="img-fluid w-100 rounded ressource-img">
+            <img src="{{ asset('images/ressources/' ~ ressource.filename) }}" alt="{{ ressource.alt }}" class="img-fluid w-100 rounded ressource-img">
             <div class="hover-overlay rounded d-flex flex-column align-items-center justify-content-center">
               <h3 class="px-3 fs-6 text-white ff-montserrat text-center mb-3">{{ ressource.title }}</h3>
             </div>
@@ -21,7 +21,8 @@
               class="btn rounded toggle-bookmark {{ ressource in app.user.bookmarks ? 'btn-dark' : 'btn-outline-light' }}"
               data-ressource-id="{{ ressource.id }}"
               data-bookmarked="{{ ressource in app.user.bookmarks ? 'true' : 'false' }}"
-              onclick="event.preventDefault(); event.stopPropagation();">
+              onclick="event.preventDefault(); event.stopPropagation();"
+              title="ajouter/enlever des favoris">
               <i class="{{ ressource in app.user.bookmarks ? 'bi bi-check-lg' : 'bi bi-bookmark' }}"></i>
             </button>
           </div>
@@ -37,7 +38,7 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+// Gestion des bookmarks
   document.querySelectorAll('.toggle-bookmark').forEach(button => {
     button.addEventListener('click', () => {
       const ressourceId = button.dataset.ressourceId;
@@ -84,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
-});
+
 </script>
 
 

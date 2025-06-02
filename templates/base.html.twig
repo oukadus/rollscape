@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 	<head>
 		<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,10 +33,10 @@
             <!-- Sidebar -->
             <aside class="sidebar">
                 <div class="sidebar-logo">
-                    <h1><a href="{{path('app_home')}}" class="logo text-decoration-none fw-bolder"><img src="{{asset('images/rs-logo.png')}}"><br><span class="logo-text">Roll<em class="fw-light fst-normal">Scape</em></span></a></h1>
+                    <h1><a href="{{path('app_home')}}" class="logo text-decoration-none fw-bolder" title="Accueil"><img src="{{asset('images/rs-logo.png')}}" alt="RollScape - Accueil"><br><span class="logo-text">Roll<em class="fw-light fst-normal">Scape</em></span></a></h1>
                 </div>
                 <div class="d-flex rs-toggle-btn">
-                    <button id="toggleSidebar" class="btn btn-sm btn-outline-secondary mb-3 rounded-circle">
+                    <button id="toggleSidebar" class="btn btn-sm btn-outline-secondary mb-3 rounded-circle" aria-label="Basculer la barre latérale">
                         <i class="bi bi-chevron-double-left"></i>
                     </button>
                 </div>
@@ -95,8 +95,9 @@
                 
             </aside>
             
-            <!-- Main Content -->
+            {# Main Content #}
             <main class="main-content rounded-top">
+                {# Formulaire de recherche #}
                 <div class="container-fluid py-3 form-search"> 
                     <div class="container">
                         <form method="get" action="{{ path('ressource_search') }}" class="d-flex justify-content-center align-items-center gap-2">
@@ -112,7 +113,7 @@
 
                             {% if types is defined %}
                             <div class="type-select">
-                                <select name="type" class="form-select">
+                                <select name="type" class="form-select" aria-label="Type de ressource">
                                     <option value="">Tous les types</option>
                                     {% for typeItem in types %}
                                         <option value="{{ typeItem.slug }}" {% if type is defined and type == typeItem.slug %}selected{% endif %}>
@@ -123,7 +124,7 @@
                             </div>
                             {% endif %}
                             <div class="button-search">
-                                <button type="submit" class="btn btn-rs-primary rounded w-100 d-flex justify-content-center align-items-center">
+                                <button type="submit" class="btn btn-rs-primary rounded w-100 d-flex justify-content-center align-items-center" title="Rechercher" aria-label="Rechercher">
                                     <i class="bi bi-search"></i>
                                 </button>
                             </div>

@@ -61,6 +61,10 @@ class RessourceType extends AbstractType
                 'placeholder' => 'Ajoutez des étiquettes',
                 ]
             ])
+            ->add('alt', TextType::class, [
+                'label' => 'Texte alternatif',
+                'attr' => ['placeholder' => 'Indiquez un texte alternatif pour l\'accessibilité'],
+            ])
             ->add('description', null, [
                 'label' => 'Description (optionnelle)',
                 'attr' => ['rows' => 5],

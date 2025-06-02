@@ -1,15 +1,18 @@
-/* Fonts Import */
+/* ///////////////////////////////////////
+    Styles généraux
+////////////////////////////////////// */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
   --rs-font: "montserrat", sans-serif;
-  --rs-color-accent: #f37021;
+  --rs-color-accent: #e2712c;
   --rs-color-subtle: #f9e8e5;
   --rs-color-light: #f5f5f5;
   --rs-color-white: #fefefe;
   --rs-color-border: #e9ecef;
   --rs-color-text: #6c757d;
   --rs-color-logo: #212020;
+  --bs-nav-link-color: var(--rs-color-accent) !important;
 }
 
 html[data-theme="dark"] {
@@ -49,6 +52,7 @@ html[data-theme="dark"] {
 
 body {
   background: var(--rs-color-light);
+  font-family: var(--rs-font);
 }
 
 body,
@@ -214,8 +218,12 @@ form .search-button:focus {
   position: relative;
   font-size: 0.9rem;
   margin-left: 0.6rem;
-  font-family: var(--rs-font);
+  font-family: var(--rs-font-secondary);
   font-weight: 500;
+}
+
+.nav-link:focus {
+  color: var(--rs-color-accent);
 }
 
 .sidebar .nav-link.active::before {

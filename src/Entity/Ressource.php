@@ -45,6 +45,9 @@ class Ressource
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'ressources')]
     private Collection $tags;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $alt = null;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -159,6 +162,18 @@ class Ressource
     public function removeTag(Tag $tag): static
     {
         $this->tags->removeElement($tag);
+
+        return $this;
+    }
+
+    public function getAlt(): ?string
+    {
+        return $this->alt;
+    }
+
+    public function setAlt(?string $alt): static
+    {
+        $this->alt = $alt;
 
         return $this;
     }
