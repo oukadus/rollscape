@@ -40,13 +40,16 @@ final class RessourceController extends AbstractController
     }
 
     #[Route('/ressource/search', name: 'ressource_search')]
-    public function search(Request $request, RessourceRepository $ressourceRepository, TypeRepository $typeRepository, PaginatorInterface $paginator): Response
+    public function search(Request $request, RessourceRepository $ressourceRepository, TypeRepository $typeRepository, PaginatorInterface $paginator, EntityManagerInterface $entityManager): Response
     {
         $search = $request->query->get('search');
         $typeSlug = $request->query->get('type');
         $types = $typeRepository->findAll();
 
-        // ✅ On utilise une méthode qui retourne une QUERY
+        $tags = $entityManager->getRepository(Tag::class)->findAll();
+        
+
+        // On utilise une méthode qui retourne une QUERY
         $query = $ressourceRepository->createQueryForSearch($search, $typeSlug);
 
         $pagination = $paginator->paginate(
@@ -58,7 +61,8 @@ final class RessourceController extends AbstractController
         'ressources' => $pagination,
         'search' => $search,
         'types' => $types,
-        'type' => $typeSlug,
+        'type' => $typeSlug,   
+        'tags' => $tags,  
     ]);
     }
 
@@ -68,6 +72,7 @@ final class RessourceController extends AbstractController
         $ressource = new Ressource();
         $form = $this->createForm(RessourceType::class, $ressource);
         $form->handleRequest($request);
+        
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Associer l'utilisateur connecté
@@ -148,6 +153,11 @@ final class RessourceController extends AbstractController
     #[Route('/{id}/edit', name: 'app_ressource_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Ressource $ressource, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
+        if ($ressource->getUser() !== $this->getUser()) {
+            $this->addFlash('warning', 'Vous n\'êtes pas autorisé à modifier cette ressource.');
+            return $this->redirectToRoute('app_home');
+        }
+        
         $form = $this->createForm(RessourceType::class, $ressource);
         $form->handleRequest($request);
         // Tous les tags possibles pour la whitelist Tagify
@@ -226,6 +236,10 @@ final class RessourceController extends AbstractController
     #[Route('/{id}', name: 'app_ressource_delete', methods: ['POST'])]
     public function delete(Request $request, Ressource $ressource, EntityManagerInterface $entityManager): Response
     {
+        if ($ressource->getUser() !== $this->getUser()) {
+            $this->addFlash('danger', 'Vous n\'êtes pas autorisé à supprimer cette ressource.');
+            return $this->redirectToRoute('app_home');
+        }
         if ($this->isCsrfTokenValid('delete'.$ressource->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($ressource);
             $entityManager->flush();

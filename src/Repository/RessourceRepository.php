@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Tag;
 use App\Entity\User;
 use App\Entity\Ressource;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -80,15 +82,23 @@ class RessourceRepository extends ServiceEntityRepository
 
         
         // La recherche avec type
-        public function createQueryForSearch(?string $search, ?string $typeSlug): \Doctrine\ORM\Query
+       public function createQueryForSearch(?string $search, ?string $typeSlug): \Doctrine\ORM\Query
         {
             $qb = $this->createQueryBuilder('r')
                 ->leftJoin('r.tags', 't')->addSelect('t')
                 ->leftJoin('r.type', 'ty')->addSelect('ty');
 
             if ($search) {
-                $qb->andWhere('r.title LIKE :search OR r.description LIKE :search OR t.name LIKE :search')
-                ->setParameter('search', '%' . $search . '%');
+                $keywords = array_filter(explode(' ', $search));
+
+                foreach ($keywords as $index => $word) {
+                    $qb->andWhere("
+                        r.title LIKE :word$index
+                        OR r.description LIKE :word$index
+                        OR t.name LIKE :word$index
+                    ")
+                    ->setParameter("word$index", '%' . $word . '%');
+                }
             }
 
             if ($typeSlug) {
@@ -96,8 +106,24 @@ class RessourceRepository extends ServiceEntityRepository
                 ->setParameter('type', $typeSlug);
             }
 
-            return $qb->orderBy('r.created_at', 'DESC')->getQuery();
+            return $qb->distinct() // évite doublons si plusieurs tags matchent
+                    ->orderBy('r.created_at', 'DESC')
+                    ->getQuery();
         }
+
+        // Filtrer par tag
+        public function getQueryBuilderByTag(Tag $tag): QueryBuilder
+        {
+            return $this->createQueryBuilder('r')
+                ->leftJoin('r.tags', 't')
+                ->addSelect('t')
+                ->where('t = :tag')
+                ->setParameter('tag', $tag)
+                ->orderBy('r.created_at', 'DESC');
+        }
+
+        
+        
 
 
        //    public function findByExampleField($value): array

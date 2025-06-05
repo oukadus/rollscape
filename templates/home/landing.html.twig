@@ -3,50 +3,231 @@
 {% block title %}RollScape - Accueil{% endblock %}
 
 {% block main %}
- <div class="container position-relative mt-3 mb-3">
-          <div class="mw-xl mw-lg-none mx-auto">
-            <div class="row align-items-center">
-              <div class="col-lg-7 mb-20 mb-lg-0">
-                <div class="mw-2xl">
-                  <span class="badge px-5 py-2 text-rs-accent bg-primary-rs-subtle mb-1">Organisez, partagez, explorez</span>
-                  <h1 class="font-heading display-1 fw-bolder mb-5">
-                    <span>La plateforme communautaire des rôlistes</span>
-                    <span style="font-family: 'Playfair Display', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman';"> créatifs</span>
-                  </h1>
-                  <div class="d-sm-flex align-items-center mb-5">
-                    <div>
-                      <svg width="84" height="10" viewbox="0 0 84 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 4.25C0.585786 4.25 0.25 4.58579 0.25 5C0.25 5.41421 0.585786 5.75 1 5.75L1 4.25ZM84 5.00001L76.5 0.669879L76.5 9.33013L84 5.00001ZM1 5.75L77.25 5.75001L77.25 4.25001L1 4.25L1 5.75Z" fill="#1E254C"></path>
-                      </svg>
-                    </div>
-                    <div class="mt-3 mt-sm-0 ps-sm-3 mw-lg">
-                      <a class="btn btn-rs-primary" href="{{ path('app_register') }}">
-                        <span>Commencez l’exploration</span>
-                        <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M14.83 11.29L10.59 7.05C10.497 6.95627 10.3864 6.88188 10.2646 6.83111C10.1427 6.78034 10.012 6.7542 9.88 6.7542C9.74799 6.7542 9.61729 6.78034 9.49543 6.83111C9.37357 6.88188 9.26297 6.95627 9.17 7.05C8.98375 7.23736 8.87921 7.49082 8.87921 7.755C8.87921 8.01919 8.98375 8.27264 9.17 8.46L12.71 12L9.17 15.54C8.98375 15.7274 8.87921 15.9808 8.87921 16.245C8.87921 16.5092 8.98375 16.7626 9.17 16.95C9.26344 17.0427 9.37426 17.116 9.4961 17.1658C9.61794 17.2155 9.7484 17.2408 9.88 17.24C10.0116 17.2408 10.1421 17.2155 10.2639 17.1658C10.3857 17.116 10.4966 17.0427 10.59 16.95L14.83 12.71C14.9237 12.617 14.9981 12.5064 15.0489 12.3846C15.0997 12.2627 15.1258 12.132 15.1258 12C15.1258 11.868 15.0997 11.7373 15.0489 11.6154C14.9981 11.4936 14.9237 11.383 14.83 11.29Z" fill="currentColor"></path>
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                  {# <div>
-                    <span class="d-block mb-4 fs-9 fw-semibold text-secondary">ILS NOUS FONT CONFIANCE</span>
-                    <div class="d-flex flex-wrap gap-4">
-                      <img class="img-fluid" src="{{ asset('images/brands/logo-example1.png') }}" alt="">
-                      <img class="img-fluid" src="{{ asset('images/brands/logo-example3.png')}}" alt="">
-                      <img class="img-fluid" src="{{ asset('images/brands/logo-example2.png')}}" alt="">
-                    </div>
-                  </div> #}
-                </div>
+  {# Section Héro #}
+  <section class="container position-relative mt-3 mb-3" id="hero">
+    <div class="mw-xl mw-lg-none mx-auto">
+      <div class="row align-items-center">
+        <div class="col-lg-7 mb-20 mb-lg-0">
+          <div class="mw-2xl">
+            <span class="badge px-5 py-2 text-rs-accent bg-primary-rs-subtle mb-1">Organisez, partagez, explorez</span>
+            <h1 class="font-heading display-1 fw-bolder mb-5">
+              <span>La plateforme communautaire des rôlistes</span>
+              <span class="ff-playfair fst-italic"> créatifs</span>
+            </h1>
+            <div class="d-sm-flex align-items-center mb-5">
+              <div>
+                <svg width="84" height="10" viewBox="0 0 84 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 4.25C0.585786 4.25 0.25 4.58579 0.25 5C0.25 5.41421 0.585786 5.75 1 5.75L1 4.25ZM84 5.00001L76.5 0.669879L76.5 9.33013L84 5.00001ZM1 5.75L77.25 5.75001L77.25 4.25001L1 4.25L1 5.75Z" fill="#1E254C"></path>
+                </svg>
               </div>
-              <div class="col-lg-5">
-                <div class="position-relative">
-                  
-                  </div>
-                  <img class="img-fluid d-block w-100" src="{{asset('/images/image-blue-header.png')}}" alt="">
-                </div>
+              <div class="mt-3 mt-sm-0 ps-sm-3 mw-lg">
+                <a class="btn btn-rs-primary" href="{{ path('app_register') }}">
+                  <span>Commencez l’exploration</span>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14.83 11.29L10.59 7.05C10.497 6.95627 10.3864 6.88188 10.2646 6.83111C10.1427 6.78034 10.012 6.7542 9.88 6.7542C9.74799 6.7542 9.61729 6.78034 9.49543 6.83111C9.37357 6.88188 9.26297 6.95627 9.17 7.05C8.98375 7.23736 8.87921 7.49082 8.87921 7.755C8.87921 8.01919 8.98375 8.27264 9.17 8.46L12.71 12L9.17 15.54C8.98375 15.7274 8.87921 15.9808 8.87921 16.245C8.87921 16.5092 8.98375 16.7626 9.17 16.95C9.26344 17.0427 9.37426 17.116 9.4961 17.1658C9.61794 17.2155 9.7484 17.2408 9.88 17.24C10.0116 17.2408 10.1421 17.2155 10.2639 17.1658C10.3857 17.116 10.4966 17.0427 10.59 16.95L14.83 12.71C14.9237 12.617 14.9981 12.5064 15.0489 12.3846C15.0997 12.2627 15.1258 12.132 15.1258 12C15.1258 11.868 15.0997 11.7373 15.0489 11.6154C14.9981 11.4936 14.9237 11.383 14.83 11.29Z" fill="currentColor"></path>
+                  </svg>
+                </a>
               </div>
             </div>
           </div>
         </div>
-        
+        <div class="col-lg-5">
+          <div class="position-relative rounded-4">
+            <img class="img-fluid d-block  rounded-4  ms-lg-5 hero-img" src="{{ asset('/images/hero.webp') }}" alt="Homme regardant des  îles flottantes">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# Section À propos du jeu de rôle #}
+  <section id="about" class="py-5 rs-bg-white">
+      <div class="container">
+          <div class="row align-items-center">
+              <div class="col-lg-6">
+                  <img src="{{ asset('/images/jdr.webp') }}"   
+                        alt="Tabletop RPG session with players" 
+                        class="img-fluid rounded-4 mb-4 mb-lg-0">
+              </div>
+              <div class="col-lg-6 mb-4 mb-lg-0">
+                  <div class="badge px-5 py-2 text-rs-accent bg-primary-rs-subtle mb-1">L'univers des jeux de rôle sur table</div>
+                  <h2 class="display-5 fw-bold mb-4">Créez, jouez et imaginez <span class="ff-playfair fst-italic">ensemble</span></h2>
+                  <p class="text-muted mb-2">
+                    Les jeux de rôle sur table sont des expériences collaboratives où les joueurs inventent des personnages, explorent des mondes fantastiques et vivent des histoires épiques guidés par un meneur du jeu.
+                  </p>
+                  <p class="text-muted mb-4">
+                    Avec <strong>RollScape</strong>, enrichissez vos parties grâce à des ressources visuelles immersives : cartes de combat, pions, décors et illustrations.
+                  </p>
+                  <ul class="list-unstyled">
+                      <li class="d-flex align-items-center mb-2">
+                          <i class="bi bi-dice-6 text-rs-accent me-2"></i>
+                          <span>Créez des personnages mémorables et des histoires inoubliables</span>
+                      </li>
+                      <li class="d-flex align-items-center mb-2">
+                          <i class="bi bi-people text-rs-accent me-2"></i>
+                          <span>Renforcez les liens grâce au jeu coopératif</span>
+                      </li>
+                      <li class="d-flex align-items-center mb-2">
+                          <i class="bi bi-map text-rs-accent me-2"></i>
+                          <span>Explorez une infinité de mondes et de scénarios</span>
+                      </li>
+                  </ul>
+              </div>
+              
+          </div>
+      </div>
+  </section>
+
+  {# Section Fonctionnalités #}
+  <section id="features" class="py-5">
+        <div class="container">
+            <div class="row justify-content-center text-center mb-5">
+                <div class="col-lg-8">
+                    <div class="badge px-5 py-2 text-rs-accent bg-primary-rs-subtle mb-1">Fonctionnalités de la plateforme</div>
+                    <h2 class="display-5 fw-bold mb-4">Tout ce qu’il vous faut pour <span class="ff-playfair fst-italic">illustrer</span> vos aventures</h2>
+                    <p class="text-muted">
+                        Notre plateforme vous offre des outils puissants pour trouver, organiser et partager les visuels parfaits pour vos parties de jeu de rôle.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Features Grid -->
+            <div class="row g-5">
+                <!-- Add Visual -->
+                <div class="col-lg-6">
+                    <div class="feature-card bg-white rounded-3 p-5 h-100 shadow-sm border-0">
+                        <div class="row align-items-center">
+                            <div class="col-md-3 text-center mb-4 mb-md-0">
+                                <div class="feature-icon-large rs-bg-accent text-rs-white rounded-circle d-inline-flex align-items-center justify-content-center">
+                                    <i class="bi bi-image"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <h4 class="fw-bold mb-3">Ajouter un visuel</h4>
+                                <p class="text-muted mb-0">
+                                    Téléversez et partagez vos propres créations : cartes, portraits de personnages, objets magiques… Formats multiples et images haute résolution pris en charge.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Favorites -->
+                <div class="col-lg-6">
+                    <div class="feature-card bg-white rounded-3 p-5 h-100 shadow-sm border-0">
+                        <div class="row align-items-center">
+                            <div class="col-md-3 text-center mb-4 mb-md-0">
+                                <div class="feature-icon-large rs-bg-accent text-rs-white rounded-circle d-inline-flex align-items-center justify-content-center">
+                                    <i class="bi bi-bookmark-heart"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <h4 class="fw-bold mb-3">Collection de Favoris</h4>
+                                <p class="text-muted mb-0">
+                                    Gardez vos visuels préférés à portée de main grâce à votre collection de favoris personnel. Parfait pour retrouver rapidement les éléments clés de vos parties.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Search -->
+                <div class="col-lg-6">
+                    <div class="feature-card bg-white rounded-3 p-5 h-100 shadow-sm border-0">
+                        <div class="row align-items-center">
+                            <div class="col-md-3 text-center mb-4 mb-md-0">
+                                <div class="feature-icon-large rs-bg-accent text-rs-white rounded-circle d-inline-flex align-items-center justify-content-center">
+                                    <i class="bi bi-search"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <h4 class="fw-bold mb-3">Recherche intelligente</h4>
+                                <p class="text-muted mb-0">
+                                    Trouvez exactement ce dont vous avez besoin grâce à des filtres puissants : style, décor, type de personnage… Notre système de tags avancé vous garantit des résultats précis.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Download Options -->
+                <div class="col-lg-6">
+                    <div class="feature-card bg-white rounded-3 p-5 h-100 shadow-sm border-0">
+                        <div class="row align-items-center">
+                            <div class="col-md-3 text-center mb-4 mb-md-0">
+                                <div class="feature-icon-large rs-bg-accent text-rs-white rounded-circle d-inline-flex align-items-center justify-content-center">
+                                    <i class="bi bi-download fs-2"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <h4 class="fw-bold mb-3">Téléchargement</h4>
+                                <p class="text-muted mb-0">
+                                    Téléchargez vos visuels en haute qualité pour les utiliser hors ligne : sur table virtuelle, en impression ou en affichage numérique.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  {# section onboarding #}
+  <section id="onboarding" class="py-5">
+      <div class="container">
+          <div class="row justify-content-center  text-center mb-5">
+              <div class="col-lg-8">
+                  <div class="badge px-5 py-2 text-rs-accent bg-primary-rs-subtle mb-1">Premiers pas sur RollScape</div>
+                  <h2 class="display-5 fw-bold mb-4">Rejoignez la communauté en 3 étapes <span class="ff-playfair fst-italic">simples</span></h2>
+                  <p class="text-muted">
+                      Créer un compte sur RollScape est <strong>rapide</strong> et <strong>gratuit</strong>. Suivez ces étapes pour commencer à enrichir vos parties de jeu de rôle avec des ressources visuelles.
+                  </p>
+              </div>
+          </div>
+          
+          <div class="row g-4 mb-5">
+              <div class="col-md-4">
+                  <div class="text-center position-relative">
+                      <div class="step-number rs-bg-accent text-rs-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3 z-2">
+                          1
+                      </div>
+                      <h5 class="fw-bold mb-3">Créer un compte</h5>
+                      <p class="text-muted">
+                          Inscrivez-vous gratuitement et complétez votre profil pour commencer à utiliser la plateforme.
+                      </p>
+                      <div class="step-connector d-none d-md-block"></div>
+                  </div>
+              </div>
+              
+              <div class="col-md-4">
+                  <div class="text-center position-relative">
+                      <div class="step-number rs-bg-accent text-rs-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3 z-2">
+                          2
+                      </div>
+                      <h5 class="fw-bold mb-3">Explorer la galerie</h5>
+                      <p class="text-muted">
+                          Parcourez les ressources partagées par la communauté : cartes, pions, illustrations… Inspirez-vous pour vos prochaines aventures..
+                      </p>
+                      <div class="step-connector d-none d-md-block"></div>
+                  </div>
+              </div>
+              
+              <div class="col-md-4">
+                  <div class="text-center">
+                      <div class="step-number rs-bg-accent text-rs-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3 z-2">
+                          3
+                      </div>
+                      <h5 class="fw-bold mb-3">Partager vos visuels</h5>
+                      <p class="text-muted">
+                          Contribuez à la plateforme en publiant vos propres créations. Chaque ressource partagée aide la communauté à imaginer plus loin.
+                      </p>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="text-center">
+              <a class="btn btn-rs-primary btn-lg px-4 py-2" role="button" title="s'inscrire" href="{{path('app_register')}}">Rejoignez nous !</a>
+          </div>
+      </div>
+  </section>
 {% endblock %}

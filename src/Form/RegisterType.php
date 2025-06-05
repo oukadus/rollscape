@@ -5,12 +5,14 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -75,6 +77,15 @@ class RegisterType extends AbstractType
                 'label' => 'Confirmer votre mot de passe',
                 'attr' => ['placeholder' => '********']
             ]
+        ])
+        ->add('agreeTerms', CheckboxType::class, [
+            'label' => false,
+            'mapped' => false, // ce champ ne correspond pas à une propriété de l'entité User
+            'constraints' => [
+                new IsTrue([
+                    'message' => 'Vous devez accepter les conditions pour créer un compte.',
+                ]),
+            ],
         ])
         ->add('submit', SubmitType::class, [
             'label' => 'S\'inscrire', 

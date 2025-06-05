@@ -5,7 +5,7 @@
 {% block main %}
 
 <div class="container">
-    <div class="card mt-4 mb-3 shadow-sm p-2 mx-auto" style="width: 40%">
+    <div class="card register-card mt-4 mb-3 shadow-sm py-2 px-2 px-lg-5 mx-auto">
       <div class="card-header bg-white border-bottom pb-3">
         <h3 class="card-title mb-3 text-center display-6 fw-bolder">Créer un compte</h3>
         <p class="card-text text-muted text-center">Bienvenue sur RollScape ! Remplissez le formulaire suivant pour créer votre compte gratuit.</p>
@@ -41,8 +41,17 @@
   </div>
   {{ form_errors(registerform.password.second) }}
 </div>
-       
-
+<div class="mb-3">
+<div class="form-check ps-0">
+    <div class="d-flex align-items-center">
+    {{ form_widget(registerform.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
+    <label class="form-check-label" for="{{ registerform.agreeTerms.vars.id }}">
+        J'accepte les <a href="{{ path('app_terms') }}" target="_blank" class="text-rs-accent text-decoration-none">conditions d'utilisation</a>.
+    </label>
+    </div>
+    {{ form_errors(registerform.agreeTerms) }}
+</div>
+</div>
         {{ form_row(registerform.submit)}}
         
         {{ form_end(registerform) }}

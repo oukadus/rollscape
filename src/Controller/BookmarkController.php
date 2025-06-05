@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\TypeRepository;
 use App\Repository\RessourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,15 +12,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class BookmarkController extends AbstractController
 {
-    //  1. Il va falloir créer une page pour afficher les ressources bookmarkées par l'utilisateur connecté
     #[Route('/bookmarks', name: 'app_bookmark')]
-    public function index(): Response
+    public function index(RessourceRepository $ressourceRepository, TypeRepository $typeRepository, Request $request): Response
     {
-        return $this->render('bookmark/index.html.twig');
+        // Search bar
+        $type = $request->query->get('type');
+        $types = $typeRepository->findAll();
+        $search = $request->query->get('search');
+
+        return $this->render('bookmark/index.html.twig',[
+            'search' => $search,
+            'types' => $types,
+            'type' => $type,
+        ]);
     }
 
     #[Route('/bookmark/add/{id}', name: 'app_bookmark_add')]
-    public function addBookmark(RessourceRepository $RessourceRepository, int $id, EntityManagerInterface $entityManager, Request $request): Response
+    public function addBookmark(RessourceRepository $RessourceRepository, int $id, EntityManagerInterface $entityManager, Request $request ): Response
     {
         $user = $this->getUser();
         $ressource = $RessourceRepository->findOneById($id); 

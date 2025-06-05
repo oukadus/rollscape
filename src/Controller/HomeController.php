@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Tag;
+use App\Repository\TagRepository;
 use App\Repository\TypeRepository;
 use App\Repository\RessourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,6 +24,7 @@ final class HomeController extends AbstractController
         $type = $request->query->get('type');
         $types = $typeRepository->findAll();
         $search = $request->query->get('search');
+        $tags = $entityManager->getRepository(Tag::class)->findTagsByUsage();
 
          $query = $ressourceRepository->createQueryForAll();
 
@@ -35,11 +38,39 @@ final class HomeController extends AbstractController
                 'search' => $search,
                 'types' => $types,
                 'type' => $type,
+                'tags' => $tags,
             ]);
         }
 
         // Visiteur : landing page
         return $this->render('home/landing.html.twig');
+    }
+
+    #[Route('/tag/{slug}', name: 'app_tag_filter')]
+    public function filterByTag(string $slug, TagRepository $tagRepository, RessourceRepository $ressourceRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        $tag = $tagRepository->findOneBy(['slug' => $slug]);
+
+        $queryBuilder = $ressourceRepository->getQueryBuilderByTag($tag);
+
+        $pagination = $paginator->paginate(
+            $queryBuilder, // ✅ pas un tableau
+            $request->query->getInt('page', 1),
+            12
+        );
+
+        if (!$tag) {
+            throw $this->createNotFoundException('Tag introuvable.');
+        }
+
+        $ressources = $ressourceRepository->getQueryBuilderByTag($tag); // méthode qu'on crée juste après
+
+        return $this->render('home/index.html.twig', [
+            'ressources' => $pagination,
+            'selectedTag' => $tag,
+            'pagination' => $pagination,  
+            'tags' => $tagRepository->findTagsByUsage()
+        ]);
     }
 }
 

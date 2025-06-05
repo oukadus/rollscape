@@ -51,6 +51,10 @@ class RessourceType extends AbstractType
                 'required' => true,
                 'label' => 'Type de ressource',
                 'placeholder' => 'Sélectionnez le type de ressource',
+                'attr' => [
+                    'class' => 'd-flex gap-3',
+                ]
+
             ])
             ->add('tags', TextType::class, [
                 'mapped' => false, // car on gère manuellement l'association
@@ -67,7 +71,7 @@ class RessourceType extends AbstractType
             ])
             ->add('description', null, [
                 'label' => 'Description (optionnelle)',
-                'attr' => ['rows' => 5],
+                'attr' => ['rows' => 3, 'placeholder' => 'Ajoutez une description de la ressource'],
             ])
             -> add('submit', SubmitType::class, [
                 'label' => 'Publier',

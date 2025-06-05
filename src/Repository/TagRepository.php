@@ -16,6 +16,17 @@ class TagRepository extends ServiceEntityRepository
         parent::__construct($registry, Tag::class);
     }
 
+    public function findTagsByUsage(): array
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t, COUNT(r.id) AS HIDDEN resCount')
+            ->leftJoin('t.ressources', 'r')
+            ->groupBy('t.id')
+            ->orderBy('resCount', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Tag[] Returns an array of Tag objects
     //     */

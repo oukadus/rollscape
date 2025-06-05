@@ -4,7 +4,9 @@
 
 {% block main %}
 {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        <div class="w-50 mx-auto alert alert-danger alert-dismissible fade show">{{ error.messageKey|trans(error.messageData, 'security') }}
+			  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			  </div>
     {% endif %}
 
 
@@ -12,7 +14,7 @@
     <div class="row justify-content-center align-items-center card-center">
       <div class="col-12">
         <div class="form-signin">
-              <div class="card my-4 shadow-sm p-2 mx-auto" style="width: 40%">
+              <div class="card login-card my-4 shadow-sm p-2 mx-auto">
 
             <div class="card-body p-4 p-md-5">
               <h1 class="card-title text-center mb-4 fw-bold">Se connecter</h1>

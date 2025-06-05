@@ -2,9 +2,11 @@
     Styles généraux
 ////////////////////////////////////// */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 
 :root {
   --rs-font: "montserrat", sans-serif;
+  --rs-font-secondary: "Playfair Display", serif;
   --rs-color-accent: #e2712c;
   --rs-color-subtle: #f9e8e5;
   --rs-color-light: #f5f5f5;
@@ -55,24 +57,22 @@ body {
   font-family: var(--rs-font);
 }
 
-body,
-html {
+body#baseBody,
+html#baseHtml {
   min-height: 100vh;
   overflow: hidden;
 }
 
-main {
-  max-height: 100vh;
-  overflow: auto;
+/* Filtre par tag */
+.scroll-container {
+  scroll-behavior: smooth;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none; /* Firefox */
 }
 
-.btn {
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.card-center {
-  height: 90vh;
+.scroll-container::-webkit-scrollbar {
+  display: none; /* Chrome */
 }
 
 /* Style de Search Bar */
@@ -85,20 +85,169 @@ form .search-button:focus {
   box-shadow: none;
 }
 
+#typeFilterContainer {
+  min-width: 200px;
+  max-width: 90vw;
+  overflow-x: hidden;
+  right: 0; /* Ancré à droite pour éviter de dépasser */
+}
+
+.hidden-radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.type-option {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  display: block;
+  border-radius: 0.375rem;
+  transition: background-color 0.3s ease;
+}
+
+.type-option:hover,
+input[type="radio"]:checked + .type-option {
+  background-color: #e2e6ea;
+  font-weight: bold;
+}
+
+/* Style du champs Tagify */
 .tagify__input::before {
   color: var(--rs-color-text) !important; /* ou la couleur de ton choix */
   opacity: 1; /* important pour forcer l'affichage complet */
 }
 
 /* ///////////////////////////////////////
+    Landing Page
+////////////////////////////////////// */
+#landing-navbar {
+  height: 70px;
+}
+
+#hero {
+  min-height: calc(95vh - 70px); /* 80px = hauteur estimée de la navbar */
+}
+
+#hero img.hero-img {
+  max-height: calc(95vh - 70px); /* Ajuste selon le rendu souhaité */
+  object-fit: contain;
+}
+
+/* Enhanced Feature Cards */
+.feature-card {
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1) !important;
+  border-color: var(--purple-primary) !important;
+}
+
+.feature-icon-large {
+  width: 80px;
+  height: 80px;
+  font-size: 2rem;
+}
+
+/* Step Numbers */
+.step-number {
+  width: 60px;
+  height: 60px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Step Connectors */
+.step-connector::after {
+  content: "";
+  position: absolute;
+  top: 30px;
+  right: -50%;
+  width: 100%;
+  height: 2px;
+  background-color: var(--rs-color-subtle);
+  z-index: -1;
+}
+#onboarding {
+  position: relative;
+}
+
+#onboarding::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--rs-color-white);
+  z-index: -2;
+}
+
+/* Hover Effects */
+.hover-purple:hover {
+  color: var(--rs-color-accent) !important;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--rs-color-accent) !important;
+}
+
+/* Card Hover Effects */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.register-card:hover,
+.login-card:hover {
+  transform: none;
+  box-shadow: none !important;
+}
+
+.register-card {
+  width: 50%;
+}
+
+.login-card {
+  width: 40%;
+}
+
+/* ///////////////////////////////////////
     Classes utilitaires
 ////////////////////////////////////// */
+.btn {
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.card-center {
+  height: 90vh;
+}
+
+.ff-playfair {
+  font-family: var(--rs-font-secondary);
+}
+
 .ff-montserrat {
   font-family: var(--rs-font);
 }
 
 .rs-bg-white {
   background-color: var(--rs-color-white);
+}
+
+.rs-bg-accent {
+  background-color: var(--rs-color-accent);
 }
 
 .rs-bg-light {
@@ -135,6 +284,10 @@ form .search-button:focus {
   &:hover {
     color: var(--rs-color-accent);
   }
+}
+
+.text-rs-white {
+  color: var(--rs-color-white);
 }
 
 .bg-primary-rs-subtle {
@@ -181,7 +334,7 @@ form .search-button:focus {
 }
 
 /* ///////////////////////////////////////
-    MEMBRE SIDEBAR
+    SIDEBAR PRINCIPALE
 ////////////////////////////////////// */
 
 .sidebar {
@@ -218,7 +371,7 @@ form .search-button:focus {
   position: relative;
   font-size: 0.9rem;
   margin-left: 0.6rem;
-  font-family: var(--rs-font-secondary);
+  font-family: var(--rs-font);
   font-weight: 500;
 }
 
@@ -283,11 +436,13 @@ form .search-button:focus {
   color: var(--rs-color-text);
 }
 
-/* Contenu principal */
+/* ///////////////////////////////////////
+    MAIN CONTENT
+////////////////////////////////////// */
 .main-content {
   flex-grow: 1;
   overflow-y: auto;
-  /* background-color: #f5f5f5; */
+  max-height: 100vh;
 }
 
 /* ///////////////////////////////////////
@@ -352,7 +507,7 @@ form .search-button:focus {
 ////////////////////////////////////// */
 
 .img-preview {
-  height: 50%;
+  min-height: 50%;
 }
 
 .img-preview img {
@@ -462,12 +617,13 @@ a:hover .hover-overlay {
 }
 
 /* ///////////////////////////////////////
-    RESPONSIVE NAVBAR
+    RESPONSIVE NAVBAR & FORMS
 ////////////////////////////////////// */
 @media screen and (max-width: 992px) {
   #landing-navbar .navbar-collapse {
     background-color: var(--rs-color-white);
     z-index: 1;
+    margin-top: -10px;
   }
 
   #landing-navbar .navbar-collapse ul li {
@@ -493,6 +649,10 @@ a:hover .hover-overlay {
     color: var(--rs-color-white);
   }
 
+  .discover:hover {
+    color: var(--rs-color-white) !important;
+  }
+
   .btn-rs-group {
     flex-direction: column;
     gap: 0;
@@ -505,13 +665,30 @@ a:hover .hover-overlay {
 
     &:hover {
       background-color: var(--rs-color-accent);
-      color: var(--rs-color-logo);
+      color: var(--rs-color-white);
     }
+  }
+
+  /* Login/Register Forms */
+  .register-card,
+  .login-card {
+    width: 90%;
   }
 }
 
 /* ///////////////////////////////////////
-    RESPONSIVE FORMS
+    RESPONSIVE LOGIN/REGISTER
+////////////////////////////////////// */
+
+@media screen and (min-width: 993px) and (max-width: 1192px) {
+  .register-card,
+  .login-card {
+    width: 50%;
+  }
+}
+
+/* ///////////////////////////////////////
+    RESPONSIVE RESSOURCE FORMS
 ////////////////////////////////////// */
 
 @media screen and (max-width: 768px) {

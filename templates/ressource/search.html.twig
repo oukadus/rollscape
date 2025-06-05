@@ -3,6 +3,31 @@
 {% block title %}Ressource index{% endblock %}
 
 {% block main %}
+<div class="position-relative mb-4">
+  <button class="btn btn-light shadow-sm border rounded-circle position-absolute top-50 start-0 translate-middle-y z-2" id="scroll-left" style="width: 38px; height: 38px;">
+    ‹
+  </button>
+
+  <div class="d-flex overflow-hidden px-4">
+    <div class="d-flex flex-nowrap gap-2 py-2 scroll-container" id="tag-scroll">
+      {% for tag in tags %}
+        <a href="{{ path('app_tag_filter', {'slug': tag.slug}) }}"
+           class="btn btn-sm rounded-3 px-3 text-nowrap fw-semibold
+                  {% if selectedTag is defined and selectedTag.id == tag.id %}
+                    btn-rs-primary text-white
+                  {% else %}
+                    btn-outline-secondary
+                  {% endif %}">
+          {{ tag.name }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <button class="btn btn-light shadow-sm border rounded-circle position-absolute top-50 end-0 translate-middle-y z-2" id="scroll-right" style="width: 38px; height: 38px;">
+    ›
+  </button>
+</div>
 
 <div class="container mb-5">
   <h2 class="mb-4 ff-montserrat fw-bolder fs-3 visually-hidden">Ressources</h2>
@@ -37,7 +62,6 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.toggle-bookmark').forEach(button => {
     button.addEventListener('click', () => {
       const ressourceId = button.dataset.ressourceId;
@@ -84,7 +108,22 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
-});
+
+
+    // Gestion du défilement horizontal des tags
+    let container = document.getElementById('tag-scroll');
+    let btnLeft = document.getElementById('scroll-left');
+    let btnRight = document.getElementById('scroll-right');
+
+    let scrollAmount = 200;
+
+    btnLeft.addEventListener('click', () => {
+      container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+
+    btnRight.addEventListener('click', () => {
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
 </script>
 
 
