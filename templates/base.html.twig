@@ -106,7 +106,7 @@
                                 <input
                                     type="text"
                                     name="search"
-                                    class="form-control serch-input tagify-input"
+                                    class="form-control serch-input"
                                     placeholder="Rechercher une ressource sans virgule (Ex: 'marché fantasy')"
                                     value="{{ search is defined ? search : '' }}"
                                 >
@@ -117,7 +117,7 @@
                                 <button type="button" class="btn btn-outline-secondary" id="toggleTypeFilter" title="Filtrer par type">
                                     <i class="bi bi-filter"></i>
                                 </button>
-                                <div id="typeFilterContainer" class="bg-light p-3 rounded shadow-sm position-absolute mt-2 d-none" style="z-index:1000;">
+                                <div id="typeFilterContainer" class="bg-rs-light p-3 rounded shadow-sm position-absolute mt-2 d-none" style="z-index:1000;">
                                     {% for typeItem in types %}
                                         <div>
                                             <input class="form-check-input hidden-radio" type="radio" name="type" id="type_{{ loop.index }}" value="{{ typeItem.slug }}"

@@ -59,10 +59,10 @@ class RessourceType extends AbstractType
             ->add('tags', TextType::class, [
                 'mapped' => false, // car on gère manuellement l'association
                 'required' => false,
-                'label' => 'Étiquettes',
+                'label' => 'Étiquettes (facultatif)',
                 'attr' => [
                 'class' => 'tagify-input', // on cible ce champ en JS
-                'placeholder' => 'Ajoutez des étiquettes',
+                'placeholder' => 'Ajoutez une ou des étiquettes',
                 ]
             ])
             ->add('alt', TextType::class, [

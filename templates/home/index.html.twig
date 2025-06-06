@@ -5,7 +5,7 @@
 {% block main %}
 
 <div class="position-relative mb-4">
-  <button class="btn btn-light shadow-sm border rounded-circle position-absolute top-50 start-0 translate-middle-y z-2" id="scroll-left" style="width: 38px; height: 38px;">
+  <button class="btn btn-rs-white shadow-sm border rounded-circle position-absolute top-50 start-0 translate-middle-y z-2" id="scroll-left" style="width: 38px; height: 38px;">
     ‹
   </button>
 
@@ -13,7 +13,7 @@
     <div class="d-flex flex-nowrap gap-2 py-2 scroll-container" id="tag-scroll">
       {% for tag in tags %}
         <a href="{{ path('app_tag_filter', {'slug': tag.slug}) }}"
-           class="btn btn-sm rounded-3 px-3 text-nowrap fw-semibold
+           class="btn btn-sm rounded-3 rs-bg-white px-3 text-nowrap fw-semibold
                   {% if selectedTag is defined and selectedTag.id == tag.id %}
                     btn-rs-primary text-white
                   {% else %}
@@ -25,14 +25,23 @@
     </div>
   </div>
 
-  <button class="btn btn-light shadow-sm border rounded-circle position-absolute top-50 end-0 translate-middle-y z-2" id="scroll-right" style="width: 38px; height: 38px;">
+  <button class="btn btn-rs-white shadow-sm border rounded-circle position-absolute top-50 end-0 translate-middle-y z-2" id="scroll-right" style="width: 38px; height: 38px;">
     ›
   </button>
 </div>
 
 <div class="container mb-5">
-  <h2 class="mb-4 ff-montserrat fw-bolder fs-3 visually-hidden">Ressources</h2>
-  <div class="masonry-gallery mt-5">
+  <h2 class="ff-montserrat fw-bolder fs-3 mb-0">Ressources</h2>
+  <p class="mb-4 text-muted">Découvrez les dernières ressources partagées par la communauté.</p>
+
+  {# {% if app.user %}
+    <div class="mb-4">
+      <a href="{{ path('app_ressource_new') }}" class="btn btn-rs-primary">
+        <i class="bi bi-plus-lg"></i> Ajouter une ressource
+      </a>
+    </div>
+  {% endif %} #}
+  <div class="masonry-gallery mt-2">
     {% for ressource in ressources %}
       <div class="masonry-item">
         <a href="{{ path('app_ressource_show', {'id': ressource.id}) }}" class="text-decoration-none d-block" title="{{ ressource.title }}">

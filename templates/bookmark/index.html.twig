@@ -12,8 +12,8 @@
 
 
 <div class="container mb-5">
-  <h2 class="mb-4 ff-montserrat fw-bolder fs-3 d-none">Ressources</h2>
-  <div class="masonry-gallery mt-5">
+  <h2 class="mb-4 ff-montserrat fw-bolder fs-3">Mes favoris</h2>
+  <div class="masonry-gallery mt-2">
     {% for ressource in app.user.bookmarks %}
       <div class="masonry-item">
         <a href="{{ path('app_ressource_show', {'id': ressource.id}) }}" class="text-decoration-none d-block">

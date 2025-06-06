@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -51,8 +53,10 @@ class RegisterType extends AbstractType
         ->add('email', EmailType::class, [
             'label' => 'Email',
             'attr' => ['placeholder' => 'Indiquez votre adresse email'],
+            'required' => true,
             'constraints' => [
                 new NotBlank(['message' => 'L\'email est obligatoire']),
+                new Email(['message' => 'Veuillez entrer une adresse email valide.']),
             ]
         ])
         ->add('password', RepeatedType::class, [
@@ -60,7 +64,6 @@ class RegisterType extends AbstractType
             'required' => true,
             'first_options' => [
                 'label' => 'Choississez votre mot de passe',
-                'attr' => ['placeholder' => '********'],
                 'invalid_message' => 'Les mots de passe ne correspondent pas.',
                 'constraints' => [
                     new NotBlank(['message' => 'Le mot de passe est obligatoire']),
@@ -69,13 +72,16 @@ class RegisterType extends AbstractType
                         'minMessage' => 'Le mot de passe doit contenir au moins 8 caractères',
                         'max' => 14,
                         'maxMessage' => 'Le mot de passe doit contenir au plus 14 caractères',
-                    ])
-
+                    ]),
+                    new Regex([
+                            'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
+                            'message' => 'Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule et un chiffre.',
+                        ])
                 ]
             ],
             'second_options' => [
                 'label' => 'Confirmer votre mot de passe',
-                'attr' => ['placeholder' => '********']
+                
             ]
         ])
         ->add('agreeTerms', CheckboxType::class, [

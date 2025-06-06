@@ -90,6 +90,7 @@ form .search-button:focus {
   max-width: 90vw;
   overflow-x: hidden;
   right: 0; /* Ancré à droite pour éviter de dépasser */
+  background-color: var(--rs-color-white);
 }
 
 .hidden-radio {
@@ -110,8 +111,9 @@ form .search-button:focus {
 
 .type-option:hover,
 input[type="radio"]:checked + .type-option {
-  background-color: #e2e6ea;
+  background-color: var(--rs-color-accent);
   font-weight: bold;
+  color: var(--rs-color-white);
 }
 
 /* Style du champs Tagify */
@@ -270,6 +272,12 @@ input[type="radio"]:checked + .type-option {
   background-color: transparent;
   color: var(--rs-color-accent);
   border: 1px solid var(--rs-color-accent);
+}
+
+.btn-rs-white {
+  background-color: var(--rs-color-white);
+  color: var(--rs-color-text);
+  border: 1px solid var(--rs-color-border);
 }
 
 .btn-outline-rs-primary:hover {

@@ -39,7 +39,11 @@ class PasswordUserType extends AbstractType
                         'minMessage' => 'Le mot de passe doit contenir au moins {{limit}} caractères',
                         'max' => 14,
                         'maxMessage' => 'Le mot de passe doit contenir au plus {{limit}} caractères',
-                    ])
+                    ]),
+                    new Regex([
+                            'pattern' => '/^(?=.[a-z])(?=.[A-Z])(?=.*\d).+$/',
+                            'message' => 'Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule et un chiffre.',
+                        ])
 
                 ]
             ],

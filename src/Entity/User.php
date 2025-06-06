@@ -55,7 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Ressource>
      */
-    #[ORM\OneToMany(targetEntity: Ressource::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: Ressource::class, mappedBy: 'user', cascade: ['remove'], orphanRemoval: true)]
     private Collection $ressources;
 
     /**
