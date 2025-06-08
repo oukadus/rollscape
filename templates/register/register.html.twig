@@ -46,7 +46,7 @@
     <div class="d-flex align-items-center">
     {{ form_widget(registerform.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
     <label class="form-check-label" for="{{ registerform.agreeTerms.vars.id }}">
-        J'accepte les <a href="{{ path('app_terms') }}" target="_blank" class="text-rs-accent text-decoration-none">conditions d'utilisation</a>.
+        J'accepte les <a href="" data-bs-toggle="modal" data-bs-target="#cguModal" class="text-rs-accent text-decoration-none">conditions d'utilisation</a>.
     </label>
     </div>
     {{ form_errors(registerform.agreeTerms) }}
@@ -61,6 +61,24 @@
           Vous avez déjà un compte ? 
           <a href="{{path('app_login')}}" class="text-decoration-none text-rs-accent">Se connecter</a>
         </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modale Bootstrap -->
+  <div class="modal fade" id="cguModal" tabindex="-1" aria-labelledby="cguModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-custom-width modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cguModalLabel">Conditions Générales d'Utilisation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+          {% include 'terms/_terms.html.twig' %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        </div>
       </div>
     </div>
   </div>
