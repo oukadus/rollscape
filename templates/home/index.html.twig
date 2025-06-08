@@ -18,7 +18,8 @@
                     btn-rs-primary text-white
                   {% else %}
                     btn-outline-secondary
-                  {% endif %}">
+                  {% endif %}"
+            title="ressources {{ tag.name }}">
           {{ tag.name }}
         </a>
       {% endfor %}
@@ -31,16 +32,14 @@
 </div>
 
 <div class="container mb-5">
+  {% if app.request.attributes.get('_route') == 'app_tag_filter' %}
+    <h2 class="mb-4 ff-montserrat fw-bolder fs-3">Ressources pour l'étiquette "{{ selectedTag.name }}"</h2>
+  {% else %}
   <h2 class="ff-montserrat fw-bolder fs-3 mb-0">Ressources</h2>
   <p class="mb-4 text-muted">Découvrez les dernières ressources partagées par la communauté.</p>
+  {% endif %}
 
-  {# {% if app.user %}
-    <div class="mb-4">
-      <a href="{{ path('app_ressource_new') }}" class="btn btn-rs-primary">
-        <i class="bi bi-plus-lg"></i> Ajouter une ressource
-      </a>
-    </div>
-  {% endif %} #}
+
   <div class="masonry-gallery mt-2">
     {% for ressource in ressources %}
       <div class="masonry-item">

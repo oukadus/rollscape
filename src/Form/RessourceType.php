@@ -23,6 +23,7 @@ class RessourceType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => 'Titre de la ressource',
                 'attr' => ['placeholder' => 'Indiquez le titre de la ressource'],
+                'required' => true,
             ])
             ->add('filename', FileType::class, [
                 'data_class' => null,
