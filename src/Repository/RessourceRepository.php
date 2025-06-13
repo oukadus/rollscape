@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Tag;
 use App\Entity\User;
+use Doctrine\ORM\Query;
 use App\Entity\Ressource;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -49,7 +50,7 @@ class RessourceRepository extends ServiceEntityRepository
         // }
 
         // Toutes les ressources
-        public function createQueryForAll(): \Doctrine\ORM\Query
+        public function createQueryForAll(): Query
         {
             return $this->createQueryBuilder('r')
                 ->leftJoin('r.tags', 't')->addSelect('t')
@@ -59,7 +60,7 @@ class RessourceRepository extends ServiceEntityRepository
         }
 
         // Les ressources d’un utilisateur
-        public function createQueryForUser(User $user): \Doctrine\ORM\Query
+        public function createQueryForUser(User $user): Query
         {
             return $this->createQueryBuilder('r')
                 ->leftJoin('r.tags', 't')->addSelect('t')
@@ -82,7 +83,7 @@ class RessourceRepository extends ServiceEntityRepository
 
         
         // La recherche avec type
-       public function createQueryForSearch(?string $search, ?string $typeSlug): \Doctrine\ORM\Query
+       public function createQueryForSearch(?string $search, ?string $typeSlug): Query
         {
             $qb = $this->createQueryBuilder('r')
                 ->leftJoin('r.tags', 't')->addSelect('t')

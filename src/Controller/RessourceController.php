@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 #[Route('/ressource')]
 final class RessourceController extends AbstractController
@@ -47,23 +48,25 @@ final class RessourceController extends AbstractController
         $types = $typeRepository->findAll();
 
         $tags = $entityManager->getRepository(Tag::class)->findAll();
-        
+
 
         // On utilise une méthode qui retourne une QUERY
         $query = $ressourceRepository->createQueryForSearch($search, $typeSlug);
 
         $pagination = $paginator->paginate(
-        $query,
-        $request->query->getInt('page', 1), 12);
+            $query,
+            $request->query->getInt('page', 1),
+            12
+        );
 
-    return $this->render('ressource/search.html.twig', [
-        'pagination' => $pagination,
-        'ressources' => $pagination,
-        'search' => $search,
-        'types' => $types,
-        'type' => $typeSlug,   
-        'tags' => $tags,  
-    ]);
+        return $this->render('ressource/search.html.twig', [
+            'pagination' => $pagination,
+            'ressources' => $pagination,
+            'search' => $search,
+            'types' => $types,
+            'type' => $typeSlug,
+            'tags' => $tags,
+        ]);
     }
 
     #[Route('/new', name: 'app_ressource_new', methods: ['GET', 'POST'])]
@@ -72,7 +75,7 @@ final class RessourceController extends AbstractController
         $ressource = new Ressource();
         $form = $this->createForm(RessourceType::class, $ressource);
         $form->handleRequest($request);
-        
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Associer l'utilisateur connecté
@@ -98,7 +101,7 @@ final class RessourceController extends AbstractController
                 $ressource->setFilename($newFilename);
             }
 
-            
+
             // Ajout à la collection du type (bidirectionnel)
             $type = $ressource->getType();
             $type->addRessource($ressource);
@@ -123,7 +126,7 @@ final class RessourceController extends AbstractController
             $entityManager->persist($ressource);
             $entityManager->flush();
 
-            
+
 
             $this->addFlash('success', 'Ressource créée avec succès.');
             return $this->redirectToRoute('app_ressource_index');
@@ -157,7 +160,7 @@ final class RessourceController extends AbstractController
             $this->addFlash('warning', 'Vous n\'êtes pas autorisé à modifier cette ressource.');
             return $this->redirectToRoute('app_home');
         }
-        
+
         $form = $this->createForm(RessourceType::class, $ressource);
         $form->handleRequest($request);
         // Tous les tags possibles pour la whitelist Tagify
@@ -171,10 +174,10 @@ final class RessourceController extends AbstractController
             // Gérer les tags
             // Supprimer les anciens tags pour éviter les doublons
             foreach ($ressource->getTags() as $existingTag) {
-            $ressource->removeTag($existingTag);
+                $ressource->removeTag($existingTag);
             }
             // Récupérer les nouveaux tags depuis le champ texte
-            $tagsInput = $form->get('tags')->getData(); 
+            $tagsInput = $form->get('tags')->getData();
 
             $tagNamesInput = array_filter(array_map('trim', explode(',', $tagsInput)));
 
@@ -211,7 +214,7 @@ final class RessourceController extends AbstractController
                 }
             }
             // Enregistrement en base
-            
+
             // Date de mise à jour
             $ressource->setUpdatedAt(new \DateTimeImmutable());
 
@@ -240,7 +243,7 @@ final class RessourceController extends AbstractController
             $this->addFlash('danger', 'Vous n\'êtes pas autorisé à supprimer cette ressource.');
             return $this->redirectToRoute('app_home');
         }
-        if ($this->isCsrfTokenValid('delete'.$ressource->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $ressource->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($ressource);
             $entityManager->flush();
         }

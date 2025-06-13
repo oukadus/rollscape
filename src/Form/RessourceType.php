@@ -14,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RessourceType extends AbstractType
 {
@@ -24,6 +25,11 @@ class RessourceType extends AbstractType
                 'label' => 'Titre de la ressource',
                 'attr' => ['placeholder' => 'Indiquez le titre de la ressource'],
                 'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Le titre est obligatoire.',
+                    ]),
+                ]
             ])
             ->add('filename', FileType::class, [
                 'data_class' => null,
@@ -62,8 +68,8 @@ class RessourceType extends AbstractType
                 'required' => false,
                 'label' => 'Étiquettes (facultatif)',
                 'attr' => [
-                'class' => 'tagify-input', // on cible ce champ en JS
-                'placeholder' => 'Ajoutez une ou des étiquettes',
+                    'class' => 'tagify-input', // on cible ce champ en JS
+                    'placeholder' => 'Ajoutez une ou des étiquettes',
                 ]
             ])
             ->add('alt', TextType::class, [
@@ -71,10 +77,10 @@ class RessourceType extends AbstractType
                 'attr' => ['placeholder' => 'Indiquez un texte alternatif pour l\'accessibilité'],
             ])
             ->add('description', null, [
-                'label' => 'Description (optionnelle)',
+                'label' => 'Description (facultatif)',
                 'attr' => ['rows' => 3, 'placeholder' => 'Ajoutez une description de la ressource'],
             ])
-            -> add('submit', SubmitType::class, [
+            ->add('submit', SubmitType::class, [
                 'label' => 'Publier',
                 'attr' => ['class' => 'btn btn-rs-primary px-4'],
             ])
