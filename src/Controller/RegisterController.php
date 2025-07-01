@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegisterType;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\MailerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +17,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 final class RegisterController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function index(Request $request, UserPasswordHasherInterface $hashedPwd, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function index(Request $request, UserPasswordHasherInterface $hashedPwd, EntityManagerInterface $entityManager, SluggerInterface $slugger, MailerInterface $mailer): Response
     {
-        $user = new User(); 
-        $form = $this->createForm(RegisterType::class, $user);	
+        $user = new User();
+        $form = $this->createForm(RegisterType::class, $user);
 
 
         $form->handleRequest($request);
@@ -29,7 +31,7 @@ final class RegisterController extends AbstractController
 
             $firstname = $form->get('firstname')->getData();
             $lastname = $form->get('lastname')->getData();
-            $annee= Date('Y');
+            $annee = Date('Y');
             // Générer un slug unique pour le nom d'utilisateur
             $slugUsername = strtolower($slugger->slug($firstname . $lastname . $annee));
 
@@ -43,10 +45,18 @@ final class RegisterController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            // Envoi d'un email de confirmation (optionnel)
+            $email = (new Email())
+                ->from('contact@ounadev.fr') // 🔒 Obligatoire ici
+                ->to($user->getEmail())
+                ->subject('Bienvenue sur RollScape !')
+                ->html('<p>Merci pour ton inscription sur RollScape !</p>');
+
+            $mailer->send($email);
+
+
             $this->addFlash('success', 'Votre compte a été créé avec succès. Vous pouvez maintenant vous connecter.');
             return $this->redirectToRoute('app_login');
-
-
         }
 
         return $this->render('register/register.html.twig', [
